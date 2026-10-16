@@ -8,3 +8,8 @@ data/processed/
 report/*.aux
 report/*.log
 report/*.out
+outputs/*/best/
+outputs/*/final/
+outputs/*/last/
+outputs/*/reference_val_logps.pt
+outputs/*/adapter/

@@ -14,6 +14,7 @@ import argparse
 import json
 import math
 import random
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -26,9 +27,9 @@ from alignment.data import ROOT, read_jsonl
 
 DEFAULTS = {  # guide configuration (manual sections 9.2 and 10.4)
     "sft": dict(lr=2e-5, batch_size=2, grad_accum=16, warmup_ratio=0.03, schedule="cosine", weight_decay=0.1,
-                max_length=512, eval_every=100, optimizer="adamw"),
+                max_length=512, eval_every=100, optimizer="adamw", init_scale=2.0**16),
     "dpo": dict(lr=1e-6, batch_size=1, grad_accum=32, warmup_ratio=0.0, schedule="constant", weight_decay=0.0,
-                max_length=512, eval_every=50, optimizer="adamw"),
+                max_length=512, eval_every=50, optimizer="adamw", init_scale=2.0**10),
 }
 
 
@@ -39,7 +40,7 @@ def keep_awake():
 
 
 def load_model(path, device, dtype=torch.float32):
-    model = AutoModelForCausalLM.from_pretrained(path, torch_dtype=dtype, attn_implementation="sdpa").to(device)
+    model = AutoModelForCausalLM.from_pretrained(path, dtype=dtype, attn_implementation="sdpa").to(device)
     model.config.use_cache = False
     return model
 
@@ -144,8 +145,10 @@ def main(argv=None):
     ap.add_argument("--weight_decay", type=float)
     ap.add_argument("--optimizer", choices=["adamw", "rmsprop"])
     ap.add_argument("--max_length", type=int)
+    ap.add_argument("--init_scale", type=float, help="GradScaler initial scale (DPO grads are summed log-probs, so start low)")
     ap.add_argument("--eval_every", type=int)
-    ap.add_argument("--eval_batch_size", type=int, default=8)
+    ap.add_argument("--eval_batch_size", type=int, default=2,
+                    help="no_grad eval still materialises fp32 logits over the 151k vocab; >2 overflows 12 GB next to Adam state")
     ap.add_argument("--beta", type=float, default=0.1)
     ap.add_argument("--clip", type=float, default=1.0)
     ap.add_argument("--epochs", type=int, default=1)
@@ -155,6 +158,7 @@ def main(argv=None):
     ap.add_argument("--max_steps", type=int, default=None, help="debug: stop after N optimizer steps")
     ap.add_argument("--no_grad_ckpt", action="store_true")
     ap.add_argument("--no_save", action="store_true", help="debug: skip checkpoints")
+    ap.add_argument("--resume", action="store_true", help="continue from <out>/last/state.pt if it exists")
     args = ap.parse_args(argv)
     for key, value in DEFAULTS[args.mode].items():
         if getattr(args, key) is None:
@@ -189,15 +193,25 @@ def main(argv=None):
     if args.mode == "dpo":
         reference = load_model(args.reference, ref_device, torch.float16 if ref_device.type == "cuda" else torch.float32)
         reference.eval().requires_grad_(False)
-        t0 = time.time()
-        reference_logps = response_logps(reference, tokenizer, val_rows, args, ref_device)
-        print(f"cached reference val log-probs in {time.time() - t0:.0f}s", flush=True)
+        # Validation reference = the SFT weights scored in the policy's own precision before any update, so the
+        # step-0 rewards are exactly 0 (manual 10.5). Training pairs use the frozen fp16 copy above. Cached on
+        # disk because after a resume the policy no longer equals the reference.
+        cache = out / "reference_val_logps.pt"
+        if args.resume and cache.exists():
+            reference_logps = torch.load(cache)
+        else:
+            t0 = time.time()
+            policy.eval()
+            reference_logps = response_logps(policy, tokenizer, val_rows, args, device)
+            policy.train()
+            torch.save(reference_logps, cache)
+            print(f"cached reference val log-probs in {time.time() - t0:.0f}s", flush=True)
 
     steps_per_epoch = len(train_rows) // (args.batch_size * args.grad_accum)
     total_steps = min(steps_per_epoch * args.epochs, args.max_steps or 10**12)
     optimizer = make_optimizer(policy, args)
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda(total_steps, args.warmup_ratio, args.schedule))
-    scaler = torch.amp.GradScaler(device.type, enabled=device.type == "cuda")
+    scaler = torch.amp.GradScaler(device.type, init_scale=args.init_scale, enabled=device.type == "cuda")
 
     config = {**vars(args), "total_steps": total_steps, "train_rows": len(train_rows), "val_rows": len(val_rows),
               "effective_batch": args.batch_size * args.grad_accum, "device": str(device),
@@ -205,10 +219,34 @@ def main(argv=None):
               "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
               "torch": torch.__version__, "precision": "fp32 weights + fp16 autocast + GradScaler",
               "reference_dtype": "fp16" if reference is not None and ref_device.type == "cuda" else "fp32",
+              "val_reference_logps": "SFT init weights in policy precision, scored before step 1" if reference is not None else None,
               "prompt_template": core.PROMPT_TEMPLATE, "sft_loss_reduction": "token mean over the effective batch"}
     (out / "config.json").write_text(json.dumps(config, indent=1))
     metrics_path = out / "metrics.jsonl"
-    metrics_path.unlink(missing_ok=True)
+    state_path = out / "last" / "state.pt"
+    step, best, elapsed = 0, None, 0.0
+    if args.resume and state_path.exists():
+        state = torch.load(state_path, map_location="cpu", weights_only=False)
+        policy.load_state_dict(state["model"])
+        optimizer.load_state_dict(state["optimizer"])
+        scheduler.load_state_dict(state["scheduler"])
+        scaler.load_state_dict(state["scaler"])
+        step, best, elapsed = state["step"], state["best"], state["elapsed"]
+        del state
+        print(f"resumed at step {step}", flush=True)
+    if step:  # drop records logged after the saved state
+        kept = [line for line in metrics_path.read_text(encoding="utf-8").splitlines() if json.loads(line)["step"] <= step]
+        metrics_path.write_text("".join(line + "\n" for line in kept), encoding="utf-8")
+    else:
+        metrics_path.unlink(missing_ok=True)
+
+    def save_state():
+        state_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = state_path.with_suffix(".tmp")
+        torch.save({"model": policy.state_dict(), "optimizer": optimizer.state_dict(),
+                    "scheduler": scheduler.state_dict(), "scaler": scaler.state_dict(), "step": step, "best": best,
+                    "elapsed": time.time() - start}, tmp)
+        tmp.replace(state_path)  # atomic, so a crash mid-save keeps the previous state
 
     def log(record):
         record["time"] = round(time.time() - start, 1)
@@ -228,18 +266,19 @@ def main(argv=None):
             return record["val_loss"] < best["val_loss"]
         return record["val_reward_acc"] > best["val_reward_acc"]
 
-    start = time.time()
-    best = None
-    if args.mode == "dpo":  # step 0: policy == reference, so rewards are ~0 (exactly 0 up to fp16-vs-fp32 noise)
+    start = time.time() - elapsed
+    if args.mode == "dpo" and step == 0:  # val reference logps were scored by this policy, so r_w = r_l = 0 and accuracy is exactly 0
         log({"split": "val", **evaluate(0)})
 
-    step = 0
-    window = []
+    done, seen, val = step, 0, {}
     for epoch in range(args.epochs):
         order = list(range(len(train_rows)))
         random.Random(args.seed + epoch).shuffle(order)
         batches = micro_batches([train_rows[i] for i in order], args.batch_size)
         for start_idx in range(0, len(batches) - args.grad_accum + 1, args.grad_accum):
+            seen += 1
+            if seen <= done:  # resumed: the data order is seeded, so skipping reproduces the original run
+                continue
             window = batches[start_idx : start_idx + args.grad_accum]
             stats = {"loss": 0.0, "tokens": 0, "acc": 0.0, "margin": 0.0, "pairs": 0}
             if args.mode == "sft":
@@ -290,13 +329,16 @@ def main(argv=None):
                     if not args.no_save:
                         save(policy, tokenizer, out / "best", {"selected_by": "val_loss" if args.mode == "sft"
                                                                else "val_reward_acc", **val})
+                if not args.no_save and step < total_steps:
+                    save_state()
             if step >= total_steps:
                 break
         if step >= total_steps:
             break
 
     if not args.no_save:
-        save(policy, tokenizer, out / "final", {"step": step, **(val if step else {})})
+        save(policy, tokenizer, out / "final", {"step": step, **val})
+    shutil.rmtree(state_path.parent, ignore_errors=True)
     (out / "summary.json").write_text(json.dumps({"best": best, "final_step": step,
                                                   "minutes": round((time.time() - start) / 60, 1)}, indent=1))
     print("done", json.dumps(best), flush=True)

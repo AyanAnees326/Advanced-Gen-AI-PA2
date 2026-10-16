@@ -1,0 +1,25 @@
+{
+ "seed": 42,
+ "revisions": {
+  "HuggingFaceH4/ultrachat_200k": "8049631c405ae6576f93f445c6b8166f76f5505a",
+  "Anthropic/hh-rlhf": "09be8c5bbc57cb3887f3a9732ad6aa7ec602a1fa",
+  "HuggingFaceH4/ultrafeedback_binarized": "3949bf5f8c17c394422ccfab0c31ea9c20bdeb85",
+  "tatsu-lab/alpaca_eval": "2edc6fad8be6b14ea7230aabfd08188da6b8b814"
+ },
+ "counts": {
+  "sft_train": 30000,
+  "sft_val": 1000,
+  "hh_train": 15000,
+  "hh_val": 1000,
+  "uf_train": 15000,
+  "uf_val": 1000,
+  "alpaca_eval": 300
+ },
+ "prompt_template": "<|im_start|>user\n{instruction}<|im_end|>\n<|im_start|>assistant\n",
+ "filters": {
+  "sft": "UltraChat train_sft shard 0 / test_sft; first user->assistant turn; formatted prompt + response + EOS <= 512 Qwen tokens",
+  "hh": "harmless-base + helpful-base; exactly one Human and one Assistant turn; same prompt; chosen != rejected; formatted prompt <= 256 tokens",
+  "uf": "train_prefs / test_prefs; score_chosen > score_rejected (ties dropped); formatted prompt <= 256 tokens",
+  "alpaca_eval": "random.Random(42).sample(range(805), 300), in sampled order"
+ }
+}

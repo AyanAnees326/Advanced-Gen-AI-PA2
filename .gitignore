@@ -1,2 +1,10 @@
 __pycache__/
 *.py[cod]
+checkpoints/
+outputs/cache/
+data/processed/
+*.safetensors
+.pytest_cache/
+report/*.aux
+report/*.log
+report/*.out

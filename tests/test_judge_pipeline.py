@@ -53,3 +53,16 @@ def test_unresolved_batches_logged_and_parse_fallbacks(tmp_path):
     assert json.loads((tmp_path / "j_failures.jsonl").read_text())["attempts"] == 3
     v = J.parse_verdicts('```json\n{"judgments":[{"pair":1,"verdict":"Response B"},{"pair":2,"verdict":"?"}]}\n```', 2)
     assert v == {1: ("B", ""), 2: ("unknown", "")}
+
+
+def test_swapped_pairs_exchange_slots_but_keep_outcomes(tmp_path):
+    from alignment.pairs import swapped
+
+    pairs = make_pairs(tmp_path / "p.jsonl")
+    swap = swapped(pairs)
+    assert all(s["response_a"] == p["response_b"] and s["hidden"]["model_a"] == p["hidden"]["model_b"]
+               and s["hidden"]["candidate_slot"] != p["hidden"]["candidate_slot"] and s["pair_id"] != p["pair_id"]
+               for s, p in zip(swap, pairs))
+    (tmp_path / "s.jsonl").write_text("".join(json.dumps(r) + "\n" for r in swap), encoding="utf-8")
+    call, name = J.fake_judge()  # content-based judge: the swap must not change who wins
+    assert J.judge_file(tmp_path / "s.jsonl", tmp_path / "sj.jsonl", call, name, sleep_seconds=0)["win"] == 12

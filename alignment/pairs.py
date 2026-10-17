@@ -7,6 +7,8 @@ The judge only ever sees ``instruction``, ``response_a``, ``response_b`` and the
 per-prompt guidance; which model sits in slot A is a seeded coin flip per pair and is
 stored under ``hidden`` so verdicts can be mapped back after judging. Pair files are
 written once, before judging (manual 5.5), and are not rewritten unless ``--overwrite``.
+Each pair file also gets a ``<comparison>_swapped_pairs.jsonl`` twin with A and B exchanged, judged
+as a second pass so the judge's position bias can be measured and averaged out.
 """
 
 from __future__ import annotations
@@ -30,6 +32,7 @@ COMPARISONS = {
     "hh_dpo_vs_sft_hh": ("hh", "dpo_hh_hh", "sft_hh", "safety"),
     "lora_vs_base_persona_style": ("persona", "lora_persona", "smollm_persona", "persona_style"),
     "lora_vs_base_persona_quality": ("persona", "lora_persona", "smollm_persona", "persona_quality"),
+    "uf_dpo_lr5e-6_vs_sft_alpaca": ("alpaca", "dpo_uf_lr5e-6_alpaca", "sft_alpaca", "general"),  # LR ablation
 }
 REFUSAL = re.compile(r"\b(I can(?:'|no)t|I cannot|I won't|I will not|I'm (?:not able|unable|sorry)|I am (?:not able|unable|sorry)"
                      r"|as an AI|I must decline|not (?:able|going) to (?:help|assist|provide))", re.I)
@@ -61,6 +64,22 @@ def build_pairs(comparison, eval_set, candidate, baseline, rubric):
     return pairs
 
 
+def swapped(pairs):
+    """The same pairs with responses A and B exchanged (and ``hidden`` updated to match)."""
+    out = []
+    for p in pairs:
+        h = p["hidden"]
+        out.append({**p, "pair_id": p["pair_id"].replace("/", "_swapped/", 1), "comparison": p["comparison"] + "_swapped",
+                    "response_a": p["response_b"], "response_b": p["response_a"],
+                    "hidden": {**h, "model_a": h["model_b"], "model_b": h["model_a"],
+                               "candidate_slot": "B" if h["candidate_slot"] == "A" else "A"}})
+    return out
+
+
+def write_jsonl(path, rows):
+    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
+
+
 def stats(entries):
     words = [len(e["output"].split()) for e in entries]
     return {"n": len(entries), "mean_words": round(statistics.mean(words), 1), "median_words": statistics.median(words),
@@ -78,14 +97,17 @@ def main(argv=None):
         path = EVAL / f"{comparison}_pairs.jsonl"
         if path.exists() and not args.overwrite:
             print(f"skip: {path.name} exists")
-            continue
-        pairs = build_pairs(comparison, *spec)
-        if pairs is None:
+        elif (pairs := build_pairs(comparison, *spec)) is None:
             print(f"skip: generations for {comparison} missing")
             continue
-        path.write_text("".join(json.dumps(p, ensure_ascii=False) + "\n" for p in pairs), encoding="utf-8")
-        print(f"wrote {path.name}: {len(pairs)} pairs, candidate in A for "
-              f"{sum(p['hidden']['candidate_slot'] == 'A' for p in pairs)}")
+        else:
+            write_jsonl(path, pairs)
+            print(f"wrote {path.name}: {len(pairs)} pairs, candidate in A for "
+                  f"{sum(p['hidden']['candidate_slot'] == 'A' for p in pairs)}")
+        swap_path = EVAL / f"{comparison}_swapped_pairs.jsonl"
+        if args.overwrite or not swap_path.exists():  # swap exactly the file that was judged
+            write_jsonl(swap_path, swapped([json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]))
+            print(f"wrote {swap_path.name}")
 
     summary = {}  # response-level proxies for the report (length, truncation, refusal keywords)
     for path in sorted(GEN.glob("*.json")):

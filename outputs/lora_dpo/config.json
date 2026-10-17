@@ -1,0 +1,33 @@
+{
+ "out": "outputs/lora_dpo",
+ "rank": 16,
+ "alpha": 32,
+ "dropout": 0.05,
+ "lr": 5e-05,
+ "epochs": 3,
+ "batch_size": 4,
+ "grad_accum": 2,
+ "beta": 0.1,
+ "n_eval": 20,
+ "seed": 42,
+ "max_steps": -1,
+ "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+ "train_pairs": 200,
+ "eval_pairs": 20,
+ "trainable_params": 8683520,
+ "total_params": 370504640,
+ "target_modules": [
+  "down_proj",
+  "gate_proj",
+  "k_proj",
+  "o_proj",
+  "q_proj",
+  "up_proj",
+  "v_proj"
+ ],
+ "effective_batch": 8,
+ "precision": "fp16 AMP",
+ "optimizer": "AdamW (TRL default)",
+ "scheduler": "cosine, 10% warmup",
+ "steps": 75
+}

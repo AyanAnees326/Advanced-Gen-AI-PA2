@@ -1,0 +1,20 @@
+{
+ "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+ "adapter": "outputs/lora_dpo/adapter",
+ "generator": "smollm2-360m-lora-dpo",
+ "eval_set": "eval_sets/persona_style_eval.json",
+ "out": "outputs/generations/lora_persona.json",
+ "chat_template": true,
+ "max_new_tokens": 512,
+ "batch_size": 16,
+ "repetition_penalty": 1.1,
+ "no_repeat_ngram_size": 0,
+ "limit": null,
+ "decoding": "greedy (do_sample=False, temperature/top_p unused)",
+ "stop_token_ids": [
+  2
+ ],
+ "prompt_format": "tokenizer chat template",
+ "minutes": 0.31,
+ "unfinished": 0
+}

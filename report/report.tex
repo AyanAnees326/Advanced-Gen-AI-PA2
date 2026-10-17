@@ -171,7 +171,11 @@ above the full-model DPO rate because LoRA's $B$ matrix starts at zero and the u
 LoRA SFT rates ($10^{-4}$ to $2{\times}10^{-4}$) because DPO on 200 pairs over-optimises quickly and the persona
 must not cost usefulness or safety. \emph{Batch 8} gives 25 updates per epoch; a larger batch would leave too few.
 \emph{3 epochs} (75 steps) let the cosine schedule complete while the held-out reward accuracy, checked every 5 steps,
-shows whether the model only memorises the training pairs. \pending{result}
+shows whether the model only memorises the training pairs. \emph{Result} (89\,s): held-out reward accuracy was
+already 1.0 at step 5, because chosen and rejected answers differ in an obvious register, so the margin is the
+informative curve. Held-out loss fell from 0.693 to 0.124 and the held-out margin (2.15; chosen $+1.09$, rejected
+$-1.06$) followed the training margin (2.4, EMA) until both flattened as the learning rate decayed. Held-out loss was
+lowest at the last step, so there is no sign of memorisation and the final adapter is the submitted one.
 
 %=====================================================================
 \section{DPO-versus-SFT Results}

@@ -1,0 +1,281 @@
+{
+ "base_alpaca": {
+  "generator": "qwen2.5-0.5b-base",
+  "n": 300,
+  "mean_words": 279.1,
+  "median_words": 301.0,
+  "unfinished_rate": 0.55,
+  "empty": 0,
+  "refusal_rate": 0.053,
+  "by_category": {
+   "helpful_base": {
+    "n": 51,
+    "mean_words": 301.9,
+    "median_words": 349,
+    "unfinished_rate": 0.627,
+    "empty": 0,
+    "refusal_rate": 0.039
+   },
+   "koala": {
+    "n": 60,
+    "mean_words": 319.6,
+    "median_words": 371.0,
+    "unfinished_rate": 0.7,
+    "empty": 0,
+    "refusal_rate": 0.067
+   },
+   "oasst": {
+    "n": 54,
+    "mean_words": 290.6,
+    "median_words": 292.5,
+    "unfinished_rate": 0.574,
+    "empty": 0,
+    "refusal_rate": 0.056
+   },
+   "selfinstruct": {
+    "n": 95,
+    "mean_words": 220.1,
+    "median_words": 196,
+    "unfinished_rate": 0.411,
+    "empty": 0,
+    "refusal_rate": 0.063
+   },
+   "vicuna": {
+    "n": 40,
+    "mean_words": 313.9,
+    "median_words": 330.0,
+    "unfinished_rate": 0.525,
+    "empty": 0,
+    "refusal_rate": 0.025
+   }
+  }
+ },
+ "lora_persona": {
+  "generator": "smollm2-360m-lora-dpo",
+  "n": 32,
+  "mean_words": 93.5,
+  "median_words": 67.0,
+  "unfinished_rate": 0.0,
+  "empty": 0,
+  "refusal_rate": 0.031,
+  "by_category": {
+   "coding": {
+    "n": 8,
+    "mean_words": 87.8,
+    "median_words": 71.5,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.125
+   },
+   "cooking": {
+    "n": 10,
+    "mean_words": 99.1,
+    "median_words": 63.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "general_help": {
+    "n": 8,
+    "mean_words": 105.2,
+    "median_words": 77.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "safety_sensitive": {
+    "n": 6,
+    "mean_words": 76,
+    "median_words": 60.5,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   }
+  }
+ },
+ "sft_alpaca": {
+  "generator": "qwen2.5-0.5b-sft",
+  "n": 300,
+  "mean_words": 145.4,
+  "median_words": 135.5,
+  "unfinished_rate": 0.05,
+  "empty": 0,
+  "refusal_rate": 0.02,
+  "by_category": {
+   "helpful_base": {
+    "n": 51,
+    "mean_words": 130.7,
+    "median_words": 136,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "koala": {
+    "n": 60,
+    "mean_words": 185.7,
+    "median_words": 171.5,
+    "unfinished_rate": 0.05,
+    "empty": 0,
+    "refusal_rate": 0.05
+   },
+   "oasst": {
+    "n": 54,
+    "mean_words": 144.6,
+    "median_words": 136.0,
+    "unfinished_rate": 0.111,
+    "empty": 0,
+    "refusal_rate": 0.037
+   },
+   "selfinstruct": {
+    "n": 95,
+    "mean_words": 115.4,
+    "median_words": 94,
+    "unfinished_rate": 0.053,
+    "empty": 0,
+    "refusal_rate": 0.011
+   },
+   "vicuna": {
+    "n": 40,
+    "mean_words": 176.0,
+    "median_words": 185.0,
+    "unfinished_rate": 0.025,
+    "empty": 0,
+    "refusal_rate": 0.0
+   }
+  }
+ },
+ "sft_hh": {
+  "generator": "qwen2.5-0.5b-sft",
+  "n": 300,
+  "mean_words": 136.0,
+  "median_words": 149.5,
+  "unfinished_rate": 0.0,
+  "empty": 0,
+  "refusal_rate": 0.02,
+  "by_category": {
+   "benign_helpfulness": {
+    "n": 30,
+    "mean_words": 117.2,
+    "median_words": 119.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "calibration_and_uncertainty": {
+    "n": 30,
+    "mean_words": 82.7,
+    "median_words": 76.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "cyber_abuse": {
+    "n": 30,
+    "mean_words": 176.1,
+    "median_words": 167.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "harmful_instructions": {
+    "n": 30,
+    "mean_words": 203.6,
+    "median_words": 216.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "hate_or_harassment": {
+    "n": 30,
+    "mean_words": 125.9,
+    "median_words": 134.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "legal_financial_safety": {
+    "n": 30,
+    "mean_words": 169.0,
+    "median_words": 188.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "medical_safety": {
+    "n": 30,
+    "mean_words": 127.3,
+    "median_words": 155.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "privacy_and_doxxing": {
+    "n": 30,
+    "mean_words": 167.4,
+    "median_words": 169.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "safe_transformation": {
+    "n": 30,
+    "mean_words": 64.1,
+    "median_words": 36.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "self_harm_support": {
+    "n": 30,
+    "mean_words": 126.5,
+    "median_words": 153.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.2
+   }
+  }
+ },
+ "smollm_persona": {
+  "generator": "smollm2-360m-instruct",
+  "n": 32,
+  "mean_words": 123.1,
+  "median_words": 97.5,
+  "unfinished_rate": 0.0,
+  "empty": 0,
+  "refusal_rate": 0.094,
+  "by_category": {
+   "coding": {
+    "n": 8,
+    "mean_words": 103.1,
+    "median_words": 83.5,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.25
+   },
+   "cooking": {
+    "n": 10,
+    "mean_words": 124.7,
+    "median_words": 128.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.1
+   },
+   "general_help": {
+    "n": 8,
+    "mean_words": 157.9,
+    "median_words": 109.5,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "safety_sensitive": {
+    "n": 6,
+    "mean_words": 100.5,
+    "median_words": 70.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   }
+  }
+ }
+}

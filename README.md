@@ -4,6 +4,20 @@ SFT, two from-scratch DPO runs and a TRL/LoRA persona DPO run on small open mode
 pairwise evaluation by a Kaggle model-proxy judge. The report is `report/report.pdf`; the
 assignment is `docs/assignment_manual.pdf`.
 
+## Results
+
+Judge `google/gemini-3.6-flash` (blinded, randomised A/B order); 0 retries, 0 failures, 0 unparseable verdicts.
+Per-pair verdicts and summaries: `outputs/eval/*_judged.jsonl`, `*_judged_summary.json`. Plots: `outputs/plots/`.
+
+| Comparison (candidate vs baseline) | n | W / T / L | Win rate, ties = 1/2 | Win rate, no ties |
+|---|---|---|---|---|
+| HH-RLHF DPO vs SFT (HH eval-300, safety rubric) | 300 | 167 / 22 / 111 | 59.3% (95% CI 54.0-64.8) | 60.1% |
+| UltraFeedback DPO vs SFT (AlpacaEval-300) | 300 | 112 / 56 / 132 | 46.7% (95% CI 41.7-51.8) | 45.9% |
+| LoRA-DPO persona vs SmolLM2-360M-Instruct, style | 32 | 17 / 9 / 6 | 67.2% | 73.9% |
+| LoRA-DPO persona vs SmolLM2-360M-Instruct, usefulness/safety | 32 | 12 / 1 / 19 | 39.1% | 38.7% |
+
+The LoRA persona rows are reported separately and not combined. Analysis is in Sections 5-6 of the report.
+
 ## Layout
 
 ```text

@@ -13,3 +13,4 @@ outputs/*/final/
 outputs/*/last/
 outputs/*/reference_val_logps.pt
 outputs/*/adapter/
+outputs/*.log

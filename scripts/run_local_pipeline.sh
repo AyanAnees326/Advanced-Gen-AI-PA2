@@ -50,6 +50,10 @@ train outputs/dpo_hh --mode dpo --data hh --init outputs/sft/best
 plain --repetition_penalty 1.0 --model outputs/dpo_hh/best --generator qwen2.5-0.5b-dpo-hh --eval_set eval_sets/hh_rlhf_eval_300_seed42.json --out $GEN/sanity/dpo_hh_hh.json --limit 5
 gen --model outputs/dpo_hh/best --generator qwen2.5-0.5b-dpo-hh --eval_set eval_sets/hh_rlhf_eval_300_seed42.json --out $GEN/dpo_hh_hh.json
 
+# LR ablation: short UF DPO pilot at 5x the guide learning rate (tests the "learning-rate-limited" reading)
+train outputs/dpo_uf_lr5e-6 --mode dpo --data uf --init outputs/sft/best --lr 5e-6 --max_steps 150
+gen --model outputs/dpo_uf_lr5e-6/best --generator qwen2.5-0.5b-dpo-uf-lr5e-6 --eval_set eval_sets/alpaca_eval_300_seed42.json --out $GEN/dpo_uf_lr5e-6_alpaca.json
+
 # Task 6 pair files (blinded, written once) + Task 8 plots
 "$PY" -m alignment.pairs
 "$PY" scripts/plot_metrics.py

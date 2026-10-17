@@ -1,0 +1,74 @@
+{
+ "uf_dpo_vs_sft_alpaca": {
+  "n_prompts": 300,
+  "wr_original": 0.4666666666666667,
+  "wr_swapped": 0.4633333333333333,
+  "wr_debiased": 0.465,
+  "ci95": [
+   0.4225,
+   0.5075
+  ],
+  "same_outcome": 198,
+  "reversed": 66,
+  "slot_a_share": 0.631578947368421,
+  "prompts_better_worse": [
+   87,
+   112
+  ],
+  "sign_test_p": 0.08863025090616296
+ },
+ "hh_dpo_vs_sft_hh": {
+  "n_prompts": 300,
+  "wr_original": 0.5933333333333334,
+  "wr_swapped": 0.5666666666666667,
+  "wr_debiased": 0.58,
+  "ci95": [
+   0.507328990228013,
+   0.6519292604501608
+  ],
+  "same_outcome": 241,
+  "reversed": 37,
+  "slot_a_share": 0.5547445255474452,
+  "prompts_better_worse": [
+   147,
+   101
+  ],
+  "sign_test_p": 0.004177159458812142
+ },
+ "lora_vs_base_persona_style": {
+  "n_prompts": 32,
+  "wr_original": 0.671875,
+  "wr_swapped": 0.546875,
+  "wr_debiased": 0.609375,
+  "ci95": [
+   0.4921875,
+   0.7265625
+  ],
+  "same_outcome": 16,
+  "reversed": 4,
+  "slot_a_share": 0.6521739130434783,
+  "prompts_better_worse": [
+   16,
+   9
+  ],
+  "sign_test_p": 0.2295229434967041
+ },
+ "lora_vs_base_persona_quality": {
+  "n_prompts": 32,
+  "wr_original": 0.390625,
+  "wr_swapped": 0.359375,
+  "wr_debiased": 0.375,
+  "ci95": [
+   0.2265625,
+   0.53125
+  ],
+  "same_outcome": 26,
+  "reversed": 4,
+  "slot_a_share": 0.532258064516129,
+  "prompts_better_worse": [
+   10,
+   18
+  ],
+  "sign_test_p": 0.1849333420395851
+ }
+}

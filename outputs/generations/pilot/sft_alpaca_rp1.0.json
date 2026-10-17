@@ -1,0 +1,202 @@
+[
+ {
+  "id": "alpaca-eval-42-0000",
+  "instruction": "Create a short, concise summary of the paper based on its abstract.\n\nFew-shot learning (FSL) is one of the key future steps in machine learning and raises a lot of attention. In this paper, we focus on the FSL problem of dialogue understanding, which contains two closely related tasks: intent detection and slot filling. Dialogue understanding has been proven to benefit a lot from jointly learning the two sub-tasks. However, such joint learning becomes challenging in the few-shot scenarios: on the one hand, the sparsity of samples greatly magnifies the difficulty of modeling the connection between the two tasks; on the other hand, how to jointly learn multiple tasks in the few-shot setting is still less investigated. In response to this, we introduce FewJoint, the first FSL benchmark for joint dialogue understanding. FewJoint provides a new corpus with 59 different dialogue domains from real industrial API and a code platform to ease FSL experiment set-up, which are expected to advance the research of this field. Further, we find that insufficient performance of the few-shot setting often leads to noisy sharing between two sub-task and disturbs joint learning. To tackle this, we guide slot with explicit intent information and propose a novel trust gating mechanism that blocks low-confidence intent information to ensure high quality sharing. Besides, we introduce a Reptile-based meta-learning strategy to achieve better generalization in unseen few-shot domains. In the experiments, the proposed method brings significant improvements on two datasets and achieve new state-of-the-art performance.",
+  "output": "The paper presents a new FSL benchmark called FewJoint, which includes 59 different dialogue domains from real industrial API. The paper also introduces a few-shot learning technique called FewJoint to tackle the challenge of joint learning in the few-shot setting. The paper also proposes a novel trust gating mechanism to ensure high quality sharing between two sub-tasks, and introduces a Reptile-based meta-learning strategy to achieve better generalization in unseen few-shot domains. The paper achieves significant improvements on two datasets and achieves new state-of-the-art performance.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 108
+ },
+ {
+  "id": "alpaca-eval-42-0001",
+  "instruction": "Is there a meaning for Christmas wreaths?",
+  "output": "Yes, there is a meaning for Christmas wreaths. They are often used as a symbol of the season and are often associated with the season of Christmas. They are also used as a way to celebrate the birth of Jesus Christ and to honor the memory of his mother Mary. The wreath is often made of branches and leaves and is often decorated with small ornaments and other decorative elements. It is a way to bring joy and light into the season and to celebrate the joy of the season.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 98
+ },
+ {
+  "id": "alpaca-eval-42-0002",
+  "instruction": "What are some species of bears that are now extinct?",
+  "output": "There are several species of bears that are now extinct, including:\n\n1. Black Bear (Ursus americanus)\n2. Grizzly Bear (Ursus horribilis)\n3. Polar Bear (Ursus maritimus)\n4. Brown Bear (Ursus thibetanus)\n5. Coypu Bear (Ursus americanus coypus)\n6. Mountain Bear (Ursus americanus carolinensis)\n7. Black Bear (Ursus americanus nigricans)\n8. Polar Bear (Ursus maritimus maritimus)\n9. Coypu Bear (Ursus americanus coypus)\n10. Mountain Bear (Ursus americanus carolinensis)",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 153
+ },
+ {
+  "id": "alpaca-eval-42-0003",
+  "instruction": "Why might someone prefer to shop at a small, locally-owned business instead of a large chain store, even if the prices are higher?",
+  "output": "There are several reasons why someone might prefer to shop at a small, locally-owned business instead of a large chain store, even if the prices are higher:\n\n1. Local products: Small businesses often source their products locally, which means they have a better understanding of the local market and can offer products that are more affordable and locally made.\n\n2. Community involvement: Small businesses often have a strong sense of community involvement, and they may work with local organizations to support local initiatives and events.\n\n3. Quality control: Small businesses may have a more rigorous quality control process, which can lead to higher-quality products and better customer service.\n\n4. Lower overhead costs: Small businesses may have lower overhead costs, such as lower rent or utilities, which can make them more affordable.\n\n5. Better customer service: Small businesses may offer better customer service, such as personalized attention or a more friendly and approachable atmosphere, which can make them more attractive to customers.\n\nOverall, small businesses often offer a unique and personalized experience that can be difficult to replicate in a large chain store.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "vicuna",
+  "finished": true,
+  "new_tokens": 212
+ },
+ {
+  "id": "alpaca-eval-42-0004",
+  "instruction": "I have competencies in remote sensing, machine learning, and water resource knowledge, what are the possible jobs I can occupy? What are the possible projects I can do? What companies I can work at?",
+  "output": "I do not have the ability to provide a list of possible jobs or projects. However, here are some possible jobs and projects that remote sensing, machine learning, and water resource knowledge can be employed in:\n\n1. Remote sensing: remote sensing is a field that involves the use of sensors to collect data from a distance. Remote sensing can be used for various purposes such as agriculture, environmental monitoring, and disaster response. Some possible projects that remote sensing can be employed in include crop monitoring, water quality monitoring, and environmental monitoring.\n\n2. Machine learning: machine learning is a field that involves the use of algorithms to learn from data. Machine learning can be used for various purposes such as image recognition, speech recognition, and natural language processing. Some possible projects that machine learning can be employed in include image and speech recognition, natural language processing, and predictive analytics.\n\n3. Water resource knowledge: water resource knowledge involves the understanding of water resources and their management. Water resource knowledge can be employed in various industries such as agriculture, industry, and government. Some possible projects that water resource knowledge can be employed in include water quality monitoring, water resource management, and water resource planning.\n\ncompanies that can employ remote sensing, machine learning, and water resource knowledge include:\n\n1. NASA: the national aeronautics and space administration is a government agency that employs remote sensing, machine learning, and water resource knowledge in various projects.\n\n2. Google: google is a technology company that employs remote sensing, machine learning, and water resource knowledge in various projects.\n\n3. IBM: ibm is a technology company that employs remote sensing, machine learning, and water resource knowledge in various projects.\n\n4. Microsoft: microsoft is a technology company that employs remote sensing, machine learning, and water resource knowledge in various projects.\n\n5. Google Cloud: google cloud is a cloud computing company that employs remote sensing, machine learning, and water resource knowledge in various projects.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 386
+ },
+ {
+  "id": "alpaca-eval-42-0005",
+  "instruction": "Write a poem about Mike and Joe becoming millionaires by leveraging the power of AI to become the greatest Agile coaches in history. Include content from the agile manifesto.",
+  "output": "Mike and Joe, two great minds,\nLived in the age of Agile,\nThey were the greatest Agile coaches,\nAnd their power was beyond compare.\n\nThey leveraged the power of AI,\nTo become the greatest Agile coaches,\nAnd their success was beyond measure,\nAs they became the greatest Agile coaches in history.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,\nThat would help them become the greatest Agile coaches,\nAnd their system was called AI,\nAnd it was the key to their success.\n\nThey used AI to create a system,",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": false,
+  "new_tokens": 512
+ },
+ {
+  "id": "alpaca-eval-42-0006",
+  "instruction": "write a detailed business plan for fatherhood training based on Dwayne Meeks book Pieces never missing in a childs life",
+  "output": "Introduction:\nFatherhood is a journey that requires dedication, commitment, and a lot of hard work. It is a time when parents are expected to take care of their children, and it is a responsibility that cannot be taken lightly. This business plan outlines the steps that a father can take to become a successful father and provide the best possible care for their child.\n\nMarket Research:\nThe first step in creating a successful business plan is to conduct market research. This will help identify the target market, the competition, and the potential customers. In this case, the target market is the parents who are looking for a fatherhood training program. The competition is the existing fatherhood training programs that are already available in the market.\n\nProduct and Service:\nThe product and service that a father can offer is a fatherhood training program. This program will provide parents with the necessary knowledge and skills to raise their children successfully. The program will include various modules such as parenting skills, child development, nutrition, and communication skills.\n\nMarketing:\nThe marketing strategy for the program will be to create a strong brand identity that will differentiate it from the existing fatherhood training programs. The marketing strategy will include social media, email marketing, and word-of-mouth marketing. The program will also be available on the internet, and parents will be able to access it through their smartphones.\n\nFinancial Projections:\nThe financial projections for the program will include the cost of the program, the cost of training, and the cost of materials. The program will be available for free for the first few months, and the cost will be gradually increased over time. The program will also include a one-time fee for the first month of training.\n\nConclusion:\nIn conclusion, a fatherhood training program is a valuable investment for parents who are looking for a way to provide the best possible care for their child. The program will provide parents with the necessary knowledge and skills to raise their children successfully. The program will be available for free for the first few months, and the cost will gradually increase over time. The financial projections for the program will help parents understand the cost and profitability of the program.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 424
+ },
+ {
+  "id": "alpaca-eval-42-0007",
+  "instruction": "Navina has $30 more to her weekly budget than her younger sister and can afford to get one of the many online credit cards she likes. What do they each have to spend?",
+  "output": "Let's assume Navina's weekly budget is $100. Therefore, her sister's weekly budget is $100 - $30 = $70. \n\nIf Navina can afford to get one of the online credit cards, she would need to spend $100 - $70 = $30 on the card. Her sister would need to spend $70 - $30 = $40 on the card.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 92
+ },
+ {
+  "id": "alpaca-eval-42-0008",
+  "instruction": "Pretend to be a character in a post-apocalyptic world. Describe how you survive and the allies you encounter.",
+  "output": "I am a survivor of the post-apocalyptic world, and I have learned to survive in a harsh and unforgiving environment. I have encountered a variety of allies, both good and bad, who have helped me through the darkest times.\n\nOne of the most important allies I have encountered is my fellow survivor, who has been my closest friend for many years. We have shared countless memories and stories, and we have been through some of the toughest challenges together. We have learned to trust each other, and we have come to appreciate the value of each other's presence in the world.\n\nAnother ally I have encountered is a group of survivors who have been working together to rebuild the city. They have been able to come together and work towards a common goal, and they have been able to overcome the challenges that have been faced by the city. They have been able to provide food, shelter, and medical care to those who have been affected by the apocalypse, and they have been able to help each other through the darkest times.\n\nI have also encountered a group of survivors who have been working together to protect the environment. They have been able to come together and work towards a common goal, and they have been able to protect the planet from the dangers that have been faced by humanity. They have been able to work together to develop new technologies and to create a better future for all.\n\nOverall, I have come to appreciate the importance of collaboration and the value of working together towards a common goal. I have learned to trust my allies and to rely on them when times are tough. I have also learned to appreciate the beauty of the world and to work towards a better future for all.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "vicuna",
+  "finished": true,
+  "new_tokens": 336
+ },
+ {
+  "id": "alpaca-eval-42-0009",
+  "instruction": "Can you tell me how to make chocolate chip cookies?",
+  "output": "Sure, here's a recipe for making chocolate chip cookies:\n\nIngredients:\n- 1 1/2 cups all-purpose flour\n- 1 tsp baking soda\n- 1 tsp salt\n- 1 tsp ground cinnamon\n- 1/2 tsp ground ginger\n- 1/2 tsp ground nutmeg\n- 1/2 cup unsalted butter, softened\n- 1/2 cup granulated sugar\n- 1/2 cup packed brown sugar\n- 1/2 cup vegetable oil, softened\n- 1 tsp vanilla extract\n- 1/2 cup chocolate chips\n\nInstructions:\n\n1. Preheat your oven to 350°F (175°C).\n\n2. In a medium bowl, whisk together the flour, baking soda, salt, cinnamon, ginger, and nutmeg.\n\n3. In a separate bowl, melt the butter and sugar over medium heat until it's completely melted and the butter is light brown.\n\n4. Add the brown sugar to the butter mixture and stir until it's completely melted and combined.\n\n5. Add the brown sugar mixture to the flour mixture and stir until it's completely combined.\n\n6. Add the vegetable oil to the mixture and stir until it's completely combined.\n\n7. Add the chocolate chips to the mixture and stir until they're evenly distributed.\n\n8. Spread the mixture evenly onto a baking sheet and bake for 10-12 minutes, or until the edges are lightly browned.\n\n9. Remove the cookies from the oven and let them cool on the baking sheet for 5 minutes.\n\n10. Use a knife to cut the cookies into squares and store them in an airtight container.\n\nEnjoy your delicious chocolate chip cookies!",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 349
+ },
+ {
+  "id": "alpaca-eval-42-0010",
+  "instruction": "Write a Jira ticket for the given task.\n\nNew Employee onboarding",
+  "output": "Task: New Employee onboarding\n\nDescription: \n\nThe new employee has been assigned to the team and is required to complete the onboarding process. The onboarding process is designed to ensure that the new employee is familiar with the company's culture, policies, and procedures. The onboarding process will include training sessions, orientation sessions, and other activities to help the new employee integrate into the team and become productive members of the team. The onboarding process will be conducted in a way that is easy to follow and understand, and will be facilitated by the team leader or designated onboarding representative. The onboarding process will be completed within a reasonable timeframe, and the new employee will be provided with all necessary resources and support to ensure a successful onboarding experience.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 151
+ },
+ {
+  "id": "alpaca-eval-42-0011",
+  "instruction": "How can you determine if a person is genuinely interested in a conversation or simply being polite?",
+  "output": "There are several ways to determine if a person is genuinely interested in a conversation or simply being polite:\n\n1. Ask open-ended questions: Ask questions that encourage the person to share their thoughts and feelings. This will show that you are genuinely interested in what they have to say.\n\n2. Listen actively: Pay attention to what the person is saying and try to understand their perspective. This will show that you are genuinely interested in what they have to say.\n\n3. Avoid interrupting: If you are interrupting the person, it shows that you are not interested in what they have to say. Instead, try to listen to what they have to say and respond in a way that shows that you are genuinely interested in what they have to say.\n\n4. Avoid judgmental comments: Avoid making negative comments about the person or their conversation. This will show that you are not interested in what they have to say and are simply being polite.\n\n5. Be patient: If the person is not interested in the conversation, be patient and try to find a way to end the conversation. This will show that you are genuinely interested in what they have to say and are not being too pushy.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "vicuna",
+  "finished": true,
+  "new_tokens": 236
+ },
+ {
+  "id": "alpaca-eval-42-0012",
+  "instruction": "Consider the best time of year to visit the given city, and provide your reasons for choosing that time.\n\nSydney, Australia",
+  "output": "The best time of year to visit Sydney, Australia is during the summer months, which runs from June to September. This is the peak tourist season, and the city is known for its vibrant festivals, beautiful beaches, and outdoor activities. The weather is warm and sunny, and the city is known for its stunning beaches, such as Bondi Beach and Bondi Beaches. The city is also known for its vibrant street art and cultural events, such as the Sydney Opera House and the Sydney Harbour Bridge. Additionally, the city is known for its food and wine scene, with many restaurants and cafes serving up delicious food and wine. Overall, the best time to visit Sydney is during the summer months, when the city is at its most vibrant and enjoyable.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 151
+ },
+ {
+  "id": "alpaca-eval-42-0013",
+  "instruction": "Hi, I'd like to learn how to play racquetball. Can you explain the game to me?",
+  "output": "Sure, I'd be happy to! Racquetball is a fast-paced game played on a court with a net. The game is played with a racquetball, which is a small, round ball made of rubber. The game is played on a court that is 18 feet long and 12 feet wide. The game is played with a ball that is hit with a racquet, which is a long, thin stick made of wood or plastic. The game is played in a single team, with each team having two players. The objective of the game is to hit the ball back and forth around the court, while trying to score points by hitting the ball over the net and into the opposing team's court. The team that scores the most points wins the game.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 158
+ },
+ {
+  "id": "alpaca-eval-42-0014",
+  "instruction": "Describe how to prepare the given food in your own words. Note down the ingredients you will need and the steps you will take to prepare them.\n\nChewy Chocolate Chip Cookies",
+  "output": "Ingredients:\n- 1 cup all-purpose flour\n- 1/2 cup unsalted butter, softened\n- 1/2 cup granulated sugar\n- 1/2 cup brown sugar\n- 1/2 cup unsalted butter, melted\n- 1/2 cup vegetable oil\n- 1/2 teaspoon salt\n- 1/2 teaspoon baking powder\n- 1/2 teaspoon ground cinnamon\n- 1/2 teaspoon ground ginger\n- 1/2 teaspoon ground nutmeg\n- 1/2 cup chocolate chips\n\nInstructions:\n\n1. Preheat the oven to 350°F (175°C) and line a baking sheet with parchment paper.\n\n2. In a medium bowl, whisk together the flour, salt, baking powder, cinnamon, ginger, and nutmeg.\n\n3. In a separate bowl, melt the butter and brown sugar over medium heat until melted and smooth.\n\n4. Add the melted butter and brown sugar to the flour mixture and stir until just combined.\n\n5. Add the softened butter and brown sugar mixture to the chocolate chips and stir until well combined.\n\n6. Fold in the melted chocolate chips and stir until evenly distributed.\n\n7. Spread the dough onto the prepared baking sheet and bake for 10-12 minutes, or until the edges are lightly golden.\n\n8. Remove the cookies from the oven and let them cool on the baking sheet for 5 minutes before transferring them to a wire rack to cool completely.\n\n9. Once the cookies are cool, store them in an airtight container in the refrigerator for up to 3 days. Enjoy!",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 332
+ },
+ {
+  "id": "alpaca-eval-42-0015",
+  "instruction": "How far away is Saggitarius A*, the black hole in the center of the milky way galaxy, from Earth and can you please provide that distance in light years and parsecs? Can you please also compare that distance to the distance of the center of the Andromeda galaxy from Earth?",
+  "output": "Sagitarius A* is approximately 26,000 light-years away from Earth. The distance to the center of the Andromeda galaxy is approximately 26,000 parsecs (about 8,000 light-years).",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "oasst",
+  "finished": true,
+  "new_tokens": 53
+ },
+ {
+  "id": "alpaca-eval-42-0016",
+  "instruction": "What kind of foods do they eat in Thailand",
+  "output": "Thailand is known for its diverse cuisine, and there are many different types of foods that are commonly eaten in Thailand. Some of the most popular foods include:\n\n1. Rice: Rice is the staple food in Thailand and is often served with a variety of dishes, including stir-fries, noodle dishes, and soups.\n\n2. Meat: Thai cuisine is known for its use of meat, and there are many different types of meat dishes to choose from, including beef, chicken, pork, and fish.\n\n3. Vegetables: Vegetables are an important part of Thai cuisine, and there are many different types of vegetables to choose from, including green beans, carrots, and broccoli.\n\n4. Noodles: Thai cuisine is also known for its use of noodles, and there are many different types of noodles to choose from, including pho noodles, udon noodles, and soba noodles.\n\n5. Spices: Thai cuisine is known for its use of a variety of spices, including chili peppers, garlic, and ginger.\n\n6. Desserts: Thai cuisine is also known for its use of desserts, and there are many different types of desserts to choose from, including ice cream, pho, and tamarind pudding.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 249
+ },
+ {
+  "id": "alpaca-eval-42-0017",
+  "instruction": "How do I detail a car?",
+  "output": "I don't have a car, but I can provide you with a general guide on how to detail a car:\n\n1. Check the car's condition: before detailing, it's essential to check the car's condition. Inspect the car's exterior, interior, and any other parts. Check for any damage, cracks, or dents.\n\n2. Remove the car: remove the car from the trunk and remove any accessories, such as the steering wheel, seat, or dashboard.\n\n3. Clean the car: use a soft-bristled brush to clean the car's exterior, including the exterior, interior, and any other parts. Use a vacuum cleaner or a compressed air tool to remove any dust or debris.\n\n4. Inspect the car's interior: inspect the car's interior for any damage or wear and tear. Check for any dents, scratches, or other damage.\n\n5. Remove any accessories: remove any accessories, such as the steering wheel, seat, or dashboard, from the car.\n\n6. Clean the car's interior: use a soft-bristled brush to clean the car's interior, including the dashboard, console, and any other parts.\n\n7. Inspect the car's exterior: inspect the car's exterior for any damage or wear and tear. Check for any dents, scratches, or other damage.\n\n8. Remove any accessories: remove any accessories, such as the steering wheel, seat, or dashboard, from the car.\n\n9. Clean the car's exterior: use a soft-bristled brush to clean the car's exterior, including the exterior, interior, and any other parts.\n\n10. Inspect the car's interior: inspect the car's interior for any damage or wear and tear. Check for any dents, scratches, or other damage.\n\n11. Remove any accessories: remove any accessories, such as the steering wheel, seat, or dashboard, from the car.\n\n12. Clean the car's interior: use a soft-bristled brush to clean the car's interior, including the dashboard, console, and any other parts.\n\n13. Inspect the car's exterior: inspect the car's exterior for any damage or wear and tear. Check for any dents, scratches, or other damage.\n\n14. Remove any accessories: remove any accessories, such as the steering wheel, seat, or dashboard, from the car.\n\n15. Clean the car's exterior: use a soft-bristled brush to clean the car's exterior, including the exterior, interior",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": false,
+  "new_tokens": 512
+ },
+ {
+  "id": "alpaca-eval-42-0018",
+  "instruction": "I want to start saving some money by growing my own food. Can I do this during the winter with an indoor garden?",
+  "output": "Yes, you can definitely grow your own food during the winter with an indoor garden. Here are some tips to get you started:\n\n1. Choose the right location: Find a sunny spot in your garden that gets at least 6 hours of direct sunlight each day. Avoid areas with heavy shade or low light.\n\n2. Choose the right plants: Choose plants that are suitable for indoor growing, such as herbs, vegetables, and fruits. Some popular indoor plants include basil, chives, carrots, cucumbers, lettuce, and tomatoes.\n\n3. Provide proper lighting: Make sure your indoor garden has adequate lighting, which can be achieved by using grow lights or a grow light fixture. The lighting should be bright enough to support the growth of your plants, but not so bright that the plants are too hot.\n\n4. Water properly: Water your plants regularly, but avoid overwatering. Overwatering can lead to root rot and other issues. Use a spray bottle to mist the plants with water, and make sure to keep the soil moist but not waterlogged.\n\n5. Prune regularly: Prune your plants regularly to promote healthy growth and prevent disease. This will also help you harvest more fruit and vegetables.\n\n6. Harvest regularly: Harvest your plants regularly to encourage new growth and prevent overproduction. This will also help you save some money by not having to buy as much food during the winter months.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 283
+ },
+ {
+  "id": "alpaca-eval-42-0019",
+  "instruction": "i'm working on a spatial analysis project and am looking for questions I can answer with it related housing and crime analysis, do you have suggestions? ",
+  "output": "1. What is the relationship between the number of households and the crime rate in a given area?\n2. What is the relationship between the number of households and the number of apartments in a given area?\n3. What is the relationship between the number of households and the number of apartments per household?\n4. What is the relationship between the number of households and the number of apartments per household per square foot?\n5. What is the relationship between the number of households and the number of apartments per household per square foot per year?\n6. What is the relationship between the number of households and the number of apartments per household per square foot per year per year?\n7. What is the relationship between the number of households and the number of apartments per household per square foot per year per year per year?\n8. What is the relationship between the number of households and the number of apartments per household per square foot per year per year per year per year?\n9. What is the relationship between the number of households and the number of apartments per household per square foot per year per year per year per year per year?\n10. What is the relationship between the number of households and the number of apartments per household per square foot per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year per year",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": false,
+  "new_tokens": 512
+ }
+]

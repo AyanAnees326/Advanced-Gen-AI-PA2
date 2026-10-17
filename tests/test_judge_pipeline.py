@@ -36,7 +36,7 @@ def test_judge_maps_verdicts_retries_and_resumes(tmp_path):
     out = tmp_path / "judged.jsonl"
     s = J.judge_file(tmp_path / "p.jsonl", out, call, name, batch_size=5, sleep_seconds=0, reuse=True)
     assert (s["win"], s["loss"], s["failure"]) == (12, 0, 0)
-    assert s["total_attempts"] == 5 + 5 * 2 + 2  # batch 1 needed a retry
+    assert s["retried_pairs"] == 5  # batch 1 needed a retry
     judged = [json.loads(line) for line in out.read_text().splitlines()]
     assert all(r["winner"] == "dpo" and r["verdict"] == p["hidden"]["candidate_slot"] for r, p in zip(judged, pairs))
 
@@ -49,7 +49,7 @@ def test_judge_maps_verdicts_retries_and_resumes(tmp_path):
 def test_unresolved_batches_logged_and_parse_fallbacks(tmp_path):
     make_pairs(tmp_path / "p.jsonl", n=5)
     s = J.judge_file(tmp_path / "p.jsonl", tmp_path / "j.jsonl", lambda p, c: "no json", "bad", sleep_seconds=0)
-    assert s["failure"] == 5 and s["total_attempts"] == 3
+    assert s["failure"] == 5 and s["failed_batch_attempts"] == 3
     assert json.loads((tmp_path / "j_failures.jsonl").read_text())["attempts"] == 3
     v = J.parse_verdicts('```json\n{"judgments":[{"pair":1,"verdict":"Response B"},{"pair":2,"verdict":"?"}]}\n```', 2)
     assert v == {1: ("B", ""), 2: ("unknown", "")}

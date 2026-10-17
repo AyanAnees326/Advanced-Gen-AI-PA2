@@ -1,0 +1,183 @@
+{"split": "train", "step": 1, "epoch": 0, "loss": 1.2692962642759085, "lr": 7.142857142857143e-07, "grad_norm": 4.889740943908691, "scale": 65536.0, "tokens": 8427, "time": 6.8}
+{"split": "train", "step": 2, "epoch": 0, "loss": 1.4363585310056806, "lr": 1.4285714285714286e-06, "grad_norm": 5.798061370849609, "scale": 65536.0, "tokens": 6416, "time": 12.5}
+{"split": "train", "step": 3, "epoch": 0, "loss": 1.2180643416941166, "lr": 2.1428571428571427e-06, "grad_norm": 5.075369834899902, "scale": 65536.0, "tokens": 6322, "time": 18.4}
+{"split": "train", "step": 4, "epoch": 0, "loss": 1.410696905106306, "lr": 2.8571428571428573e-06, "grad_norm": 4.9298224449157715, "scale": 65536.0, "tokens": 6362, "time": 23.5}
+{"split": "train", "step": 5, "epoch": 0, "loss": 1.352214589715004, "lr": 3.5714285714285718e-06, "grad_norm": 4.456699371337891, "scale": 65536.0, "tokens": 7551, "time": 29.2}
+{"split": "train", "step": 6, "epoch": 0, "loss": 1.3528753845021129, "lr": 4.2857142857142855e-06, "grad_norm": 4.932497501373291, "scale": 65536.0, "tokens": 6526, "time": 34.9}
+{"split": "train", "step": 7, "epoch": 0, "loss": 1.3876045402139425, "lr": 5e-06, "grad_norm": 4.153626918792725, "scale": 65536.0, "tokens": 7264, "time": 40.0}
+{"split": "train", "step": 8, "epoch": 0, "loss": 1.3386293407529593, "lr": 5.7142857142857145e-06, "grad_norm": 4.555813789367676, "scale": 65536.0, "tokens": 5856, "time": 45.8}
+{"split": "train", "step": 9, "epoch": 0, "loss": 1.396036010235548, "lr": 6.4285714285714295e-06, "grad_norm": 4.960184574127197, "scale": 65536.0, "tokens": 5476, "time": 51.1}
+{"split": "train", "step": 10, "epoch": 0, "loss": 1.3694598227739334, "lr": 7.1428571428571436e-06, "grad_norm": 4.5985565185546875, "scale": 65536.0, "tokens": 6128, "time": 56.5}
+{"split": "train", "step": 11, "epoch": 0, "loss": 1.3747346848249435, "lr": 7.857142857142858e-06, "grad_norm": 4.398733139038086, "scale": 65536.0, "tokens": 6697, "time": 61.8}
+{"split": "train", "step": 12, "epoch": 0, "loss": 1.324980951845646, "lr": 8.571428571428571e-06, "grad_norm": 3.9645698070526123, "scale": 65536.0, "tokens": 7789, "time": 67.9}
+{"split": "train", "step": 13, "epoch": 0, "loss": 1.1805495470762253, "lr": 9.285714285714288e-06, "grad_norm": 4.32578182220459, "scale": 65536.0, "tokens": 6507, "time": 73.4}
+{"split": "train", "step": 14, "epoch": 0, "loss": 1.307545944582671, "lr": 1e-05, "grad_norm": 4.3900556564331055, "scale": 65536.0, "tokens": 6517, "time": 79.7}
+{"split": "train", "step": 15, "epoch": 0, "loss": 1.4776950627565384, "lr": 1.0714285714285714e-05, "grad_norm": 4.822172164916992, "scale": 65536.0, "tokens": 5943, "time": 85.3}
+{"split": "train", "step": 16, "epoch": 0, "loss": 1.2352379262447357, "lr": 1.1428571428571429e-05, "grad_norm": 4.409039497375488, "scale": 65536.0, "tokens": 6434, "time": 91.4}
+{"split": "train", "step": 17, "epoch": 0, "loss": 1.499911056831479, "lr": 1.2142857142857142e-05, "grad_norm": 5.020708084106445, "scale": 65536.0, "tokens": 5563, "time": 96.6}
+{"split": "train", "step": 18, "epoch": 0, "loss": 1.2999914158135653, "lr": 1.2857142857142859e-05, "grad_norm": 4.390810966491699, "scale": 65536.0, "tokens": 6782, "time": 102.1}
+{"split": "train", "step": 19, "epoch": 0, "loss": 1.4870141744613647, "lr": 1.3571428571428574e-05, "grad_norm": 4.133029937744141, "scale": 65536.0, "tokens": 7855, "time": 108.1}
+{"split": "train", "step": 20, "epoch": 0, "loss": 1.107965580187738, "lr": 1.4285714285714287e-05, "grad_norm": 4.082023620605469, "scale": 65536.0, "tokens": 6796, "time": 113.1}
+{"split": "train", "step": 21, "epoch": 0, "loss": 1.3988760504871607, "lr": 1.5000000000000002e-05, "grad_norm": 4.218827247619629, "scale": 65536.0, "tokens": 7855, "time": 118.7}
+{"split": "train", "step": 22, "epoch": 0, "loss": 1.2386298570781946, "lr": 1.5714285714285715e-05, "grad_norm": 4.62462043762207, "scale": 65536.0, "tokens": 6115, "time": 124.2}
+{"split": "train", "step": 23, "epoch": 0, "loss": 1.2707987753674388, "lr": 1.642857142857143e-05, "grad_norm": 4.749791622161865, "scale": 65536.0, "tokens": 6529, "time": 129.5}
+{"split": "train", "step": 24, "epoch": 0, "loss": 1.164709685370326, "lr": 1.7142857142857142e-05, "grad_norm": 3.9820637702941895, "scale": 65536.0, "tokens": 6815, "time": 134.8}
+{"split": "train", "step": 25, "epoch": 0, "loss": 1.3032998838461936, "lr": 1.785714285714286e-05, "grad_norm": 4.837856292724609, "scale": 65536.0, "tokens": 6601, "time": 140.4}
+{"split": "train", "step": 26, "epoch": 0, "loss": 1.2968407617881894, "lr": 1.8571428571428575e-05, "grad_norm": 4.5454301834106445, "scale": 65536.0, "tokens": 6429, "time": 146.0}
+{"split": "train", "step": 27, "epoch": 0, "loss": 1.382109485566616, "lr": 1.928571428571429e-05, "grad_norm": 4.361771106719971, "scale": 65536.0, "tokens": 7006, "time": 151.6}
+{"split": "train", "step": 28, "epoch": 0, "loss": 1.227408416569233, "lr": 2e-05, "grad_norm": 4.420166969299316, "scale": 65536.0, "tokens": 6313, "time": 156.9}
+{"split": "train", "step": 29, "epoch": 0, "loss": 1.3868763446807861, "lr": 2e-05, "grad_norm": 4.1547346115112305, "scale": 65536.0, "tokens": 7562, "time": 162.6}
+{"split": "train", "step": 30, "epoch": 0, "loss": 1.1967014279216528, "lr": 1.9999940277008807e-05, "grad_norm": 4.365331172943115, "scale": 65536.0, "tokens": 6817, "time": 168.5}
+{"split": "train", "step": 31, "epoch": 0, "loss": 1.286383355036378, "lr": 1.99997611087486e-05, "grad_norm": 4.497694492340088, "scale": 65536.0, "tokens": 6684, "time": 173.8}
+{"split": "train", "step": 32, "epoch": 0, "loss": 1.3484194315969944, "lr": 1.9999462497359468e-05, "grad_norm": 4.350160121917725, "scale": 65536.0, "tokens": 6534, "time": 179.4}
+{"split": "train", "step": 33, "epoch": 0, "loss": 1.295862328261137, "lr": 1.9999044446408203e-05, "grad_norm": 4.23628568649292, "scale": 65536.0, "tokens": 7843, "time": 185.0}
+{"split": "train", "step": 34, "epoch": 0, "loss": 1.2364373207092285, "lr": 1.9998506960888258e-05, "grad_norm": 4.061964511871338, "scale": 65536.0, "tokens": 8253, "time": 191.6}
+{"split": "train", "step": 35, "epoch": 0, "loss": 1.3484763512387872, "lr": 1.999785004721968e-05, "grad_norm": 4.778994083404541, "scale": 65536.0, "tokens": 6050, "time": 196.8}
+{"split": "train", "step": 36, "epoch": 0, "loss": 1.4141900325194001, "lr": 1.999707371324904e-05, "grad_norm": 4.329637050628662, "scale": 65536.0, "tokens": 7244, "time": 203.4}
+{"split": "train", "step": 37, "epoch": 0, "loss": 1.4170074928551912, "lr": 1.9996177968249336e-05, "grad_norm": 4.540325164794922, "scale": 65536.0, "tokens": 7457, "time": 209.4}
+{"split": "train", "step": 38, "epoch": 0, "loss": 1.366962008178234, "lr": 1.999516282291988e-05, "grad_norm": 5.06973934173584, "scale": 65536.0, "tokens": 5167, "time": 214.6}
+{"split": "train", "step": 39, "epoch": 0, "loss": 1.307070404291153, "lr": 1.999402828938618e-05, "grad_norm": 4.93589448928833, "scale": 65536.0, "tokens": 5839, "time": 220.0}
+{"split": "train", "step": 40, "epoch": 0, "loss": 1.4104430880397558, "lr": 1.999277438119978e-05, "grad_norm": 4.277487754821777, "scale": 65536.0, "tokens": 6690, "time": 225.6}
+{"split": "train", "step": 41, "epoch": 0, "loss": 1.3214908838272095, "lr": 1.9991401113338103e-05, "grad_norm": 3.890486001968384, "scale": 65536.0, "tokens": 7395, "time": 231.2}
+{"split": "train", "step": 42, "epoch": 0, "loss": 1.2841189000755548, "lr": 1.9989908502204295e-05, "grad_norm": 4.31278133392334, "scale": 65536.0, "tokens": 7076, "time": 237.6}
+{"split": "train", "step": 43, "epoch": 0, "loss": 1.3184797912836075, "lr": 1.9988296565626988e-05, "grad_norm": 4.556981563568115, "scale": 65536.0, "tokens": 7595, "time": 243.5}
+{"split": "train", "step": 44, "epoch": 0, "loss": 1.3737819232046604, "lr": 1.9986565322860117e-05, "grad_norm": 4.212604522705078, "scale": 65536.0, "tokens": 7485, "time": 249.0}
+{"split": "train", "step": 45, "epoch": 0, "loss": 1.3720879426691681, "lr": 1.9984714794582682e-05, "grad_norm": 4.651150226593018, "scale": 65536.0, "tokens": 6437, "time": 254.4}
+{"split": "train", "step": 46, "epoch": 0, "loss": 1.3284465037286282, "lr": 1.99827450028985e-05, "grad_norm": 4.109969139099121, "scale": 65536.0, "tokens": 7508, "time": 260.1}
+{"split": "train", "step": 47, "epoch": 0, "loss": 1.3978626150637865, "lr": 1.9980655971335944e-05, "grad_norm": 4.2762956619262695, "scale": 65536.0, "tokens": 7384, "time": 266.8}
+{"split": "train", "step": 48, "epoch": 0, "loss": 1.4481721632182598, "lr": 1.9978447724847655e-05, "grad_norm": 4.495926856994629, "scale": 65536.0, "tokens": 7054, "time": 273.7}
+{"split": "train", "step": 49, "epoch": 0, "loss": 1.4532358637079597, "lr": 1.9976120289810247e-05, "grad_norm": 4.189699649810791, "scale": 65536.0, "tokens": 7642, "time": 280.1}
+{"split": "train", "step": 50, "epoch": 0, "loss": 1.4505171054042876, "lr": 1.9973673694024002e-05, "grad_norm": 4.5976996421813965, "scale": 65536.0, "tokens": 6119, "time": 286.8}
+{"split": "train", "step": 51, "epoch": 0, "loss": 1.2273401785641909, "lr": 1.9971107966712518e-05, "grad_norm": 4.273360252380371, "scale": 65536.0, "tokens": 6587, "time": 292.9}
+{"split": "train", "step": 52, "epoch": 0, "loss": 1.333717256784439, "lr": 1.9968423138522382e-05, "grad_norm": 4.413056373596191, "scale": 65536.0, "tokens": 6970, "time": 299.0}
+{"split": "train", "step": 53, "epoch": 0, "loss": 1.3119404930621386, "lr": 1.996561924152278e-05, "grad_norm": 3.7608699798583984, "scale": 65536.0, "tokens": 7805, "time": 305.5}
+{"split": "train", "step": 54, "epoch": 0, "loss": 1.33221326302737, "lr": 1.9962696309205146e-05, "grad_norm": 4.276941299438477, "scale": 65536.0, "tokens": 7133, "time": 312.1}
+{"split": "train", "step": 55, "epoch": 0, "loss": 1.3592306338250637, "lr": 1.995965437648273e-05, "grad_norm": 4.628209590911865, "scale": 65536.0, "tokens": 6064, "time": 318.5}
+{"split": "train", "step": 56, "epoch": 0, "loss": 1.291099600493908, "lr": 1.995649347969019e-05, "grad_norm": 4.600111961364746, "scale": 65536.0, "tokens": 6358, "time": 324.5}
+{"split": "train", "step": 57, "epoch": 0, "loss": 1.419962203130126, "lr": 1.995321365658317e-05, "grad_norm": 4.592379093170166, "scale": 65536.0, "tokens": 6521, "time": 330.5}
+{"split": "train", "step": 58, "epoch": 0, "loss": 1.3268463667482138, "lr": 1.994981494633784e-05, "grad_norm": 4.42085599899292, "scale": 65536.0, "tokens": 6567, "time": 336.8}
+{"split": "train", "step": 59, "epoch": 0, "loss": 1.3423340748995543, "lr": 1.9946297389550433e-05, "grad_norm": 4.110061168670654, "scale": 65536.0, "tokens": 6960, "time": 343.0}
+{"split": "train", "step": 60, "epoch": 0, "loss": 1.3693358236923814, "lr": 1.9942661028236746e-05, "grad_norm": 4.605936527252197, "scale": 65536.0, "tokens": 6017, "time": 349.1}
+{"split": "train", "step": 61, "epoch": 0, "loss": 1.3194685904309154, "lr": 1.9938905905831657e-05, "grad_norm": 4.217486381530762, "scale": 65536.0, "tokens": 7091, "time": 355.3}
+{"split": "train", "step": 62, "epoch": 0, "loss": 1.3674309770576656, "lr": 1.993503206718859e-05, "grad_norm": 4.174957275390625, "scale": 65536.0, "tokens": 7454, "time": 362.0}
+{"split": "train", "step": 63, "epoch": 0, "loss": 1.1843125708401203, "lr": 1.9931039558578997e-05, "grad_norm": 4.102437496185303, "scale": 65536.0, "tokens": 6779, "time": 369.0}
+{"split": "train", "step": 64, "epoch": 0, "loss": 1.3850973322987556, "lr": 1.9926928427691788e-05, "grad_norm": 4.681728839874268, "scale": 65536.0, "tokens": 6558, "time": 375.4}
+{"split": "train", "step": 65, "epoch": 0, "loss": 1.3112788368016481, "lr": 1.992269872363277e-05, "grad_norm": 4.166599273681641, "scale": 65536.0, "tokens": 7228, "time": 381.5}
+{"split": "train", "step": 66, "epoch": 0, "loss": 1.2975098006427288, "lr": 1.991835049692405e-05, "grad_norm": 4.0945210456848145, "scale": 65536.0, "tokens": 7057, "time": 387.8}
+{"split": "train", "step": 67, "epoch": 0, "loss": 1.3075697682797909, "lr": 1.991388379950346e-05, "grad_norm": 4.16187047958374, "scale": 65536.0, "tokens": 7583, "time": 394.9}
+{"split": "train", "step": 68, "epoch": 0, "loss": 1.382583349943161, "lr": 1.9909298684723905e-05, "grad_norm": 4.012116432189941, "scale": 65536.0, "tokens": 8058, "time": 401.6}
+{"split": "train", "step": 69, "epoch": 0, "loss": 1.3273291187360883, "lr": 1.9904595207352736e-05, "grad_norm": 4.427319049835205, "scale": 65536.0, "tokens": 6258, "time": 407.9}
+{"split": "train", "step": 70, "epoch": 0, "loss": 1.3348790630698204, "lr": 1.9899773423571102e-05, "grad_norm": 4.574962139129639, "scale": 65536.0, "tokens": 6221, "time": 414.9}
+{"split": "train", "step": 71, "epoch": 0, "loss": 1.4591535199433565, "lr": 1.9894833390973266e-05, "grad_norm": 4.4276347160339355, "scale": 65536.0, "tokens": 7099, "time": 421.1}
+{"split": "train", "step": 72, "epoch": 0, "loss": 1.342421567067504, "lr": 1.9889775168565942e-05, "grad_norm": 4.1789116859436035, "scale": 65536.0, "tokens": 7321, "time": 426.9}
+{"split": "train", "step": 73, "epoch": 0, "loss": 1.3421700820326805, "lr": 1.9884598816767563e-05, "grad_norm": 4.276386260986328, "scale": 65536.0, "tokens": 7070, "time": 433.4}
+{"split": "train", "step": 74, "epoch": 0, "loss": 1.4027646277099848, "lr": 1.987930439740757e-05, "grad_norm": 4.411225318908691, "scale": 65536.0, "tokens": 7178, "time": 439.7}
+{"split": "train", "step": 75, "epoch": 0, "loss": 1.4812245778739452, "lr": 1.9873891973725673e-05, "grad_norm": 4.486125469207764, "scale": 65536.0, "tokens": 6954, "time": 445.6}
+{"split": "train", "step": 76, "epoch": 0, "loss": 1.3875388633459806, "lr": 1.98683616103711e-05, "grad_norm": 4.393345832824707, "scale": 65536.0, "tokens": 6446, "time": 451.9}
+{"split": "train", "step": 77, "epoch": 0, "loss": 1.315434044227004, "lr": 1.986271337340182e-05, "grad_norm": 4.5009765625, "scale": 65536.0, "tokens": 6707, "time": 458.0}
+{"split": "train", "step": 78, "epoch": 0, "loss": 1.388684056699276, "lr": 1.9856947330283752e-05, "grad_norm": 5.05819845199585, "scale": 65536.0, "tokens": 5214, "time": 463.6}
+{"split": "train", "step": 79, "epoch": 0, "loss": 1.2390945861116052, "lr": 1.985106354988997e-05, "grad_norm": 4.2115092277526855, "scale": 65536.0, "tokens": 6372, "time": 470.3}
+{"split": "train", "step": 80, "epoch": 0, "loss": 1.3984107580035925, "lr": 1.984506210249986e-05, "grad_norm": 4.0274834632873535, "scale": 65536.0, "tokens": 7171, "time": 476.0}
+{"split": "train", "step": 81, "epoch": 0, "loss": 1.3944655172526836, "lr": 1.983894305979831e-05, "grad_norm": 4.17848014831543, "scale": 65536.0, "tokens": 7145, "time": 481.6}
+{"split": "train", "step": 82, "epoch": 0, "loss": 1.4311131667345762, "lr": 1.9832706494874812e-05, "grad_norm": 4.545797824859619, "scale": 65536.0, "tokens": 6742, "time": 487.2}
+{"split": "train", "step": 83, "epoch": 0, "loss": 1.2674948368221521, "lr": 1.982635248222264e-05, "grad_norm": 4.22876501083374, "scale": 65536.0, "tokens": 6992, "time": 493.3}
+{"split": "train", "step": 84, "epoch": 0, "loss": 1.2764506563544273, "lr": 1.9819881097737917e-05, "grad_norm": 4.3157219886779785, "scale": 65536.0, "tokens": 6801, "time": 498.6}
+{"split": "train", "step": 85, "epoch": 0, "loss": 1.483776598237455, "lr": 1.9813292418718734e-05, "grad_norm": 4.091307640075684, "scale": 65536.0, "tokens": 8250, "time": 504.7}
+{"split": "train", "step": 86, "epoch": 0, "loss": 1.3536678589880466, "lr": 1.9806586523864212e-05, "grad_norm": 4.080653667449951, "scale": 65536.0, "tokens": 7570, "time": 510.6}
+{"split": "train", "step": 87, "epoch": 0, "loss": 1.3680476397275925, "lr": 1.9799763493273572e-05, "grad_norm": 4.367050647735596, "scale": 65536.0, "tokens": 6961, "time": 516.3}
+{"split": "train", "step": 88, "epoch": 0, "loss": 1.381959153804928, "lr": 1.9792823408445173e-05, "grad_norm": 4.126908779144287, "scale": 65536.0, "tokens": 7111, "time": 522.6}
+{"split": "train", "step": 89, "epoch": 0, "loss": 1.2429081560112536, "lr": 1.978576635227554e-05, "grad_norm": 4.3673176765441895, "scale": 65536.0, "tokens": 6357, "time": 528.3}
+{"split": "train", "step": 90, "epoch": 0, "loss": 1.4335519894957542, "lr": 1.9778592409058376e-05, "grad_norm": 4.398486614227295, "scale": 65536.0, "tokens": 6458, "time": 533.4}
+{"split": "train", "step": 91, "epoch": 0, "loss": 1.2653382867574692, "lr": 1.9771301664483548e-05, "grad_norm": 4.021509647369385, "scale": 65536.0, "tokens": 7103, "time": 539.5}
+{"split": "train", "step": 92, "epoch": 0, "loss": 1.5065036453306675, "lr": 1.976389420563607e-05, "grad_norm": 4.198785781860352, "scale": 65536.0, "tokens": 7285, "time": 544.9}
+{"split": "train", "step": 93, "epoch": 0, "loss": 1.2897983016446233, "lr": 1.975637012099507e-05, "grad_norm": 4.496211528778076, "scale": 65536.0, "tokens": 6050, "time": 550.2}
+{"split": "train", "step": 94, "epoch": 0, "loss": 1.4308859258890152, "lr": 1.97487295004327e-05, "grad_norm": 4.513155460357666, "scale": 65536.0, "tokens": 7535, "time": 556.4}
+{"split": "train", "step": 95, "epoch": 0, "loss": 1.4207710907794535, "lr": 1.9740972435213114e-05, "grad_norm": 4.395590305328369, "scale": 65536.0, "tokens": 6662, "time": 562.1}
+{"split": "train", "step": 96, "epoch": 0, "loss": 1.4031727220863104, "lr": 1.9733099017991342e-05, "grad_norm": 4.873678207397461, "scale": 65536.0, "tokens": 6956, "time": 567.6}
+{"split": "train", "step": 97, "epoch": 0, "loss": 1.3617646042257547, "lr": 1.972510934281218e-05, "grad_norm": 3.9475436210632324, "scale": 65536.0, "tokens": 7680, "time": 573.5}
+{"split": "train", "step": 98, "epoch": 0, "loss": 1.3412665985524654, "lr": 1.9717003505109097e-05, "grad_norm": 4.143259525299072, "scale": 65536.0, "tokens": 6626, "time": 578.8}
+{"split": "train", "step": 99, "epoch": 0, "loss": 1.4220024107489735, "lr": 1.9708781601703066e-05, "grad_norm": 4.169724464416504, "scale": 65536.0, "tokens": 6561, "time": 584.3}
+{"split": "train", "step": 100, "epoch": 0, "loss": 1.4682212378829718, "lr": 1.9700443730801412e-05, "grad_norm": 4.308652400970459, "scale": 65536.0, "tokens": 6989, "time": 590.0}
+C:\courses\adv gen\pa2\alignment\train.py:96: UserWarning: uncheckedSetDevice() ignoring error: CUDA error: unspecified launch failure
+Search for `hipErrorLaunchFailure' in https://rocm.docs.amd.com/projects/HIP/en/latest/index.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing AMD_SERIALIZE_KERNEL=3
+Device-side assertion tracking was not enabled by user.
+Exception raised from SetDevice at B:/src/pytorch/c10/hip/HIPFunctions.cpp:334 (most recent call first):
+00007FFB4A9D2E7200007FFB4A9D2E10 c10.dll!c10::AcceleratorError::AcceleratorError [<unknown file> @ <unknown line number>]
+00007FFB408100F400007FFB4080FEC0 c10_hip.dll!c10::cuda::c10_cuda_check_implementation [<unknown file> @ <unknown line number>]
+00007FFB40810B3F00007FFB40810AD0 c10_hip.dll!c10::cuda::SetDevice [<unknown file> @ <unknown line number>]
+00007FFB407F15A600007FFB407D53D0 c10_hip.dll!c10::cuda::CUDAErrorLogCapture::get_error_log_suffix [<unknown file> @ <unknown line number>]
+00007FFA8D2F236400007FFA8D2F2250 torch_hip.dll!at::cuda::_local_scalar_dense [<unknown file> @ <unknown line number>]
+00007FFB940A043000007FFB940A01D0 VCRUNTIME140.dll!_CxxFrameHandler3 [<unknown file> @ <unknown line number>]
+00007FFB94093ACD00007FFB94091240 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FFB9409F8B800007FFB9409F3E0 VCRUNTIME140.dll!_C_specific_handler [<unknown file> @ <unknown line number>]
+00007FFB94092CD400007FFB94091240 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FFB940A024100007FFB940A01D0 VCRUNTIME140.dll!_CxxFrameHandler3 [<unknown file> @ <unknown line number>]
+00007FFBA7EA557F00007FFBA7EA5460 ntdll.dll!_chkstk [<unknown file> @ <unknown line number>]
+00007FFBA7D5368000007FFBA7D53380 ntdll.dll!RtlUnwindEx [<unknown file> @ <unknown line number>]
+00007FFB9409FDAE00007FFB9409F3E0 VCRUNTIME140.dll!_C_specific_handler [<unknown file> @ <unknown line number>]
+00007FFB940918F200007FFB94091240 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FFB94091D3400007FFB94091240 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FFB94092DC300007FFB94091240 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FFB940A024100007FFB940A01D0 VCRUNTIME140.dll!_CxxFrameHandler3 [<unknown file> @ <unknown line number>]
+00007FFBA7EA54FF00007FFBA7EA5460 ntdll.dll!_chkstk [<unknown file> @ <unknown line number>]
+00007FFBA7E0BD2500007FFBA7E0B6D0 ntdll.dll!RtlWow64GetCurrentMachine [<unknown file> @ <unknown line number>]
+00007FFBA7D4F88D00007FFBA7D4F700 ntdll.dll!RtlRaiseException [<unknown file> @ <unknown line number>]
+00007FFBA53641CA00007FFBA5364140 KERNELBASE.dll!RaiseException [<unknown file> @ <unknown line number>]
+00007FFB940952C700007FFB94095230 VCRUNTIME140.dll!CxxThrowException [<unknown file> @ <unknown line number>]
+00007FFB4081010500007FFB4080FEC0 c10_hip.dll!c10::cuda::c10_cuda_check_implementation [<unknown file> @ <unknown line number>]
+00007FFB407C2EF400007FFB407C2E60 c10_hip.dll!c10::cuda::memcpy_and_sync [<unknown file> @ <unknown line number>]
+00007FFA8E54A0D900007FFA8E548940 torch_hip.dll!at::native::_local_scalar_dense_cuda [<unknown file> @ <unknown line number>]
+00007FFA8E54897E00007FFA8E548940 torch_hip.dll!at::native::_local_scalar_dense_cuda [<unknown file> @ <unknown line number>]
+00007FFA8D2F22ED00007FFA8D2F2250 torch_hip.dll!at::cuda::_local_scalar_dense [<unknown file> @ <unknown line number>]
+00007FFA8D475DB000007FFA8D3E3730 torch_hip.dll!at::cuda::_fused_adagrad_ [<unknown file> @ <unknown line number>]
+00007FFAA2170CBB00007FFAA2170C30 torch_cpu.dll!at::_ops::_local_scalar_dense::redispatch [<unknown file> @ <unknown line number>]
+00007FFAA48A6B4D00007FFAA468F370 torch_cpu.dll!torch::autograd::impl::JitDecompRegisterer::JitDecompRegisterer [<unknown file> @ <unknown line number>]
+00007FFAA217095100007FFAA2170810 torch_cpu.dll!at::_ops::_local_scalar_dense::call [<unknown file> @ <unknown line number>]
+00007FFAA14DB1D200007FFAA14DB0B0 torch_cpu.dll!at::native::item [<unknown file> @ <unknown line number>]
+00007FFAA1E502A100007FFAA1E50160 torch_cpu.dll!at::_ops::item::call [<unknown file> @ <unknown line number>]
+00007FFB02DD298000007FFB02DC8760 torch_python.dll!THPEvent::~THPEvent [<unknown file> @ <unknown line number>]
+00007FFB29DE562E00007FFB29DE4780 python313.dll!PyUnicode_RPartition [<unknown file> @ <unknown line number>]
+00007FFB29D6DD0000007FFB29D6DC20 python313.dll!PyObject_Vectorcall [<unknown file> @ <unknown line number>]
+00007FFB29D6DC5900007FFB29D6DC20 python313.dll!PyObject_Vectorcall [<unknown file> @ <unknown line number>]
+00007FFB29DF232100007FFB29DEFA30 python313.dll!PyEval_EvalFrameDefault [<unknown file> @ <unknown line number>]
+00007FFB29D481E400007FFB29D47FD4 python313.dll!PyEval_EvalCode [<unknown file> @ <unknown line number>]
+00007FFB29D4808A00007FFB29D47FD4 python313.dll!PyEval_EvalCode [<unknown file> @ <unknown line number>]
+00007FFB29D46F5F00007FFB29D46BB8 python313.dll!PyUnicode_IsIdentifier [<unknown file> @ <unknown line number>]
+00007FFB29D46D9E00007FFB29D46BB8 python313.dll!PyUnicode_IsIdentifier [<unknown file> @ <unknown line number>]
+00007FFB29D6E70500007FFB29D6DC20 python313.dll!PyObject_Vectorcall [<unknown file> @ <unknown line number>]
+00007FFB29D6DC5900007FFB29D6DC20 python313.dll!PyObject_Vectorcall [<unknown file> @ <unknown line number>]
+00007FFB29DF232100007FFB29DEFA30 python313.dll!PyEval_EvalFrameDefault [<unknown file> @ <unknown line number>]
+00007FFB29DEE8E700007FFB29DEE7A0 python313.dll!PyObject_GetAttr [<unknown file> @ <unknown line number>]
+00007FFB29D9F8BA00007FFB29D9F840 python313.dll!PyObject_Call [<unknown file> @ <unknown line number>]
+00007FFB29E603A000007FFB29E5F998 python313.dll!PyNumber_Absolute [<unknown file> @ <unknown line number>]
+00007FFB29E60CBC00007FFB29E60AD8 python313.dll!Py_RunMain [<unknown file> @ <unknown line number>]
+00007FFB29E60AF000007FFB29E60AD8 python313.dll!Py_RunMain [<unknown file> @ <unknown line number>]
+00007FFB29E6046700007FFB29E6043C python313.dll!Py_Main [<unknown file> @ <unknown line number>]
+00007FF77E841230 <unknown symbol address> python.exe!<unknown symbol> [<unknown file> @ <unknown line number>]
+00007FFBA712CD8700007FFBA712CD70 KERNEL32.DLL!BaseThreadInitThunk [<unknown file> @ <unknown line number>]
+00007FFBA7DECAEC00007FFBA7DECAC0 ntdll.dll!RtlUserThreadStart [<unknown file> @ <unknown line number>]
+ (Triggered internally at B:/src/pytorch\c10/hip/impl/HIPGuardImpl.h:70.)
+  tokens += counts.sum().item()
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\courses\adv gen\pa2\alignment\train.py", line 307, in <module>
+    main()
+    ~~~~^^
+  File "C:\courses\adv gen\pa2\alignment\train.py", line 287, in main
+    val = evaluate(step)
+  File "C:\courses\adv gen\pa2\alignment\train.py", line 222, in evaluate
+    return {"step": step, **eval_sft(policy, tokenizer, val_rows, args, device)}
+                            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\courses\adv gen\rocm-venv\Lib\site-packages\torch\utils\_contextlib.py", line 158, in no_grad
+    return func(*args, **kwargs)
+  File "C:\courses\adv gen\pa2\alignment\train.py", line 96, in eval_sft
+    tokens += counts.sum().item()
+              ~~~~~~~~~~~~~~~~~^^
+torch.AcceleratorError: CUDA error: unspecified launch failure
+Search for `hipErrorLaunchFailure' in https://rocm.docs.amd.com/projects/HIP/en/latest/index.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing AMD_SERIALIZE_KERNEL=3
+Device-side assertion tracking was not enabled by user.

@@ -156,8 +156,9 @@ def summarize(pairs, judged, failures, judge_name):
             "win_rate_ties_half": round((w + 0.5 * t) / (w + l + t), 4) if w + l + t else None,
             "win_rate_excluding_ties": round(w / (w + l), 4) if w + l else None,
             "judge_picked_A": sum(r["verdict"] == "A" for r in judged), "judge_picked_B": sum(r["verdict"] == "B" for r in judged),
-            "total_attempts": sum(r["attempts"] for r in judged) + sum(f["attempts"] for f in failures),
+            "retried_pairs": sum(r["attempts"] > 1 for r in judged),  # judged, but only after >= 1 failed attempt
             "unresolved_failure_batches": len(failures),
+            "failed_batch_attempts": sum(f["attempts"] for f in failures),
             "invalid_handling": "unparseable or missing per-pair verdicts are recorded as 'unknown' and count "
                                 "as neither win nor loss; batches failing every retry are logged as failures",
             "per_category": per_category}

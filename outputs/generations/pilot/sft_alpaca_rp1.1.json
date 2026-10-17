@@ -1,0 +1,202 @@
+[
+ {
+  "id": "alpaca-eval-42-0000",
+  "instruction": "Create a short, concise summary of the paper based on its abstract.\n\nFew-shot learning (FSL) is one of the key future steps in machine learning and raises a lot of attention. In this paper, we focus on the FSL problem of dialogue understanding, which contains two closely related tasks: intent detection and slot filling. Dialogue understanding has been proven to benefit a lot from jointly learning the two sub-tasks. However, such joint learning becomes challenging in the few-shot scenarios: on the one hand, the sparsity of samples greatly magnifies the difficulty of modeling the connection between the two tasks; on the other hand, how to jointly learn multiple tasks in the few-shot setting is still less investigated. In response to this, we introduce FewJoint, the first FSL benchmark for joint dialogue understanding. FewJoint provides a new corpus with 59 different dialogue domains from real industrial API and a code platform to ease FSL experiment set-up, which are expected to advance the research of this field. Further, we find that insufficient performance of the few-shot setting often leads to noisy sharing between two sub-task and disturbs joint learning. To tackle this, we guide slot with explicit intent information and propose a novel trust gating mechanism that blocks low-confidence intent information to ensure high quality sharing. Besides, we introduce a Reptile-based meta-learning strategy to achieve better generalization in unseen few-shot domains. In the experiments, the proposed method brings significant improvements on two datasets and achieve new state-of-the-art performance.",
+  "output": "The paper presents a new FSL benchmark called FewJoint, which includes 59 different dialogue domains from real-world applications. The authors argue that the few-shot setting can be challenging due to the sparsity of data and the need to jointly model the connections between two sub-tasks. They propose a few-shot learning approach that guides slots with intent information and introduces a meta-learning strategy to improve generalization in unseen few-shot domains.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 86
+ },
+ {
+  "id": "alpaca-eval-42-0001",
+  "instruction": "Is there a meaning for Christmas wreaths?",
+  "output": "Yes, there is a meaning behind the Christmas wreath. It represents the hope and joy of the season, as well as the idea that life will continue even in difficult times. The wreath can also symbolize the arrival of Christ, who was born on December 25th, which is the date of Christmas. Additionally, the colors used in the wreath may represent different aspects of Christmas, such as red representing love and joy, green representing growth and renewal, and white representing purity and innocence. Overall, the Christmas wreath is a powerful symbol of hope, joy, and faith during this time of year.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 125
+ },
+ {
+  "id": "alpaca-eval-42-0002",
+  "instruction": "What are some species of bears that are now extinct?",
+  "output": "There are several species of bears that have become extinct in the wild, including:\n\n1. Black Bear (Ursus americanus)\n2. Grizzly Bear (Ursus horribilis)\n3. Polar Bear (Ursus maritimus)\n4. Brown Bear (Ursus thibetanus)\n5. Coypu Bear (Marmota californica)\n6. Mountain Lion (Panthera tigris)\n7. American Bison (Bison bison)\n8. Yak (Odocoileus virginianus)\n9. Bighorn Sheep (Ovis canadensis)\n10. Mule Deer (Odocoileus hemionus)",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 144
+ },
+ {
+  "id": "alpaca-eval-42-0003",
+  "instruction": "Why might someone prefer to shop at a small, locally-owned business instead of a large chain store, even if the prices are higher?",
+  "output": "There could be several reasons why someone may prefer to shop at a small, locally-owned business instead of a large chain store:\n\n1. Quality: A local business often has better quality products and services because they have been carefully selected by their employees based on their expertise in the industry.\n\n2. Community involvement: Local businesses often work closely with their communities to provide support for various causes and initiatives. This can include community events, food drives, or fundraising efforts.\n\n3. Personal connection: Shopping at a local business allows individuals to connect with like-minded people who share similar interests and values.\n\n4. Lower overhead costs: Small businesses tend to have lower overhead costs than larger chains due to fewer overhead expenses such as rent, utilities, and staff salaries.\n\n5. Better customer service: Local businesses often offer personalized attention and more frequent communication with customers, which can lead to stronger relationships and loyalty.\n\n6. Unique experiences: Shopping at a local business provides unique experiences that cannot be replicated by larger chains, such as visiting a local farmer's market or attending a craft fair.\n\nOverall, shopping at a small, locally-owned business offers a variety of benefits compared to larger chains, including better quality products, personal connections, lower overhead costs, and unique experiences.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "vicuna",
+  "finished": true,
+  "new_tokens": 247
+ },
+ {
+  "id": "alpaca-eval-42-0004",
+  "instruction": "I have competencies in remote sensing, machine learning, and water resource knowledge, what are the possible jobs I can occupy? What are the possible projects I can do? What companies I can work at?",
+  "output": "Based on your skills and interests, here are some potential job opportunities:\n\n1. Remote Sensing Specialist: You could work for a company that specializes in remote sensing technology or data analysis. This could include working with government agencies, environmental organizations, or private sector companies.\n\n2. Machine Learning Engineer: If you're interested in developing algorithms to analyze large amounts of data, this could be an excellent career path. You might work for tech startups, big corporations, or research institutions.\n\n3. Water Resource Manager: If you're passionate about water conservation and management, this could be a great career path. You might work for local governments, nonprofits, or private sector companies focused on sustainable water use.\n\n4. Environmental Scientist: If you enjoy studying natural systems and their interactions with humans, this could be a rewarding career path. You might work for government agencies, academic institutions, or private sector companies focused on environmental sustainability.\n\n5. Data Analyst: If you're skilled in analyzing and interpreting complex datasets, this could be a valuable skillset. You might work for consulting firms, research labs, or government agencies.\n\n6. Environmental Scientist: If you're passionate about protecting our planet's resources, this could be a fulfilling career path. You might work for environmental advocacy groups, non-profit organizations, or government agencies focused on sustainable development.\n\n7. Environmental Scientist: If you're passionate about protecting our planet's resources, this could be a fulfilling career path. You might work for environmental advocacy groups, non-profit organizations, or government agencies focused on sustainable development.\n\n8. Environmental Scientist: If you're passionate about protecting our planet's resources, this could be a fulfilling career path. You might work for environmental advocacy groups, non-profit organizations, or government agencies focused on sustainable development.\n\n9. Environmental Scientist: If you're passionate about protecting our planet's resources, this could be a fulfilling career path. You might work for environmental advocacy groups, non-profit organizations, or government agencies focused on sustainable development.\n\n10. Environmental Scientist: If you're passionate about protecting our planet's resources, this could be a fulfilling career path. You might work for environmental advocacy groups, non-profit organizations, or government agencies focused on sustainable development.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 441
+ },
+ {
+  "id": "alpaca-eval-42-0005",
+  "instruction": "Write a poem about Mike and Joe becoming millionaires by leveraging the power of AI to become the greatest Agile coaches in history. Include content from the agile manifesto.",
+  "output": "Mike and Joe, two great minds,\nLived together for years, they never knew.\nTheir passion for Agile coaching grew,\nAnd with their hard work, they became legends.\n\nThey were not just any ordinary coaches,\nThey had a unique way of teaching,\nUsing AI technology to make it easier,\nTo help teams achieve their goals.\n\nWith the power of AI at their disposal,\nThey could create more efficient processes,\nAnd streamline workflows faster than ever before.\nThis allowed them to deliver results,\nThat would have been impossible without it.\n\nBut it wasn't just the technology that made them successful,\nIt was their unwavering commitment to excellence.\nThey believed in the power of collaboration,\nAnd worked tirelessly to bring out the best in each team member.\n\nThrough their dedication and hard work,\nThey became the greatest Agile coaches in history.\nTheir impact on organizations was immeasurable,\nAnd their legacy will continue to inspire.\n\nSo let us all learn from these two great minds,\nAnd use the power of AI to our advantage.\nFor when we do, we can achieve greatness,\nAnd leave an indelible mark on the world.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 223
+ },
+ {
+  "id": "alpaca-eval-42-0006",
+  "instruction": "write a detailed business plan for fatherhood training based on Dwayne Meeks book Pieces never missing in a childs life",
+  "output": "Introduction:\nFatherhood is an exciting and rewarding journey that requires dedication, commitment, and hard work. It can be challenging to navigate the challenges of parenthood, but with the right support system and resources, it is possible to achieve success.\n\nBusiness Plan:\n\n1. Market Research:\nThe first step towards building a successful business is conducting market research. The target audience for fatherhood training is parents who are looking for ways to improve their parenting skills and provide better care for their children. This will help identify potential customers and develop a product or service that meets their needs.\n\n2. Product Development:\nBased on the market research, we will create a product that caters to the needs of fathers. We will focus on developing a comprehensive program that includes various modules such as parenting techniques, child development, communication skills, and nutrition. Our product will be designed to cater to different levels of experience and skill level.\n\n3. Marketing Strategy:\nWe will use various marketing strategies to reach out to potential customers. These include social media advertising, email marketing, and word-of-mouth referrals. We will also collaborate with influencers and bloggers to promote our product.\n\n4. Pricing Strategy:\nOur pricing strategy will depend on the number of modules included in the product. We will set prices accordingly to ensure affordability while still providing value to our customers.\n\n5. Sales and Marketing:\nWe will launch our product through online platforms such as Amazon, Etsy, and other e-commerce websites. We will also partner with local businesses and organizations to promote our product.\n\n6. Customer Service:\nTo ensure customer satisfaction, we will have dedicated customer service representatives who will answer any questions or concerns raised by our customers. We will also offer free consultation sessions to help families get started with our product.\n\n7. Financial Projections:\nWe will conduct financial projections to determine the profitability of our business. We will analyze the revenue generated from sales and marketing, as well as the costs associated with developing and maintaining the product.\n\n8. Conclusion:\nIn conclusion, this business plan outlines the steps we will take to build a successful fatherhood training program. By following these steps, we believe we can provide quality products and services to our customers, which will ultimately lead to increased revenue and success.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 443
+ },
+ {
+  "id": "alpaca-eval-42-0007",
+  "instruction": "Navina has $30 more to her weekly budget than her younger sister and can afford to get one of the many online credit cards she likes. What do they each have to spend?",
+  "output": "Let's assume Navina spends x dollars per week on credit cards, while her younger sister spends y dollars per week.\n\nSince Navina has $30 more than her younger sister, we can write the equation:\n\nx = y + 30\n\nWe also know that their combined weekly spending is equal to their total weekly budget, which is $60 (since they both have a weekly budget of $60):\n\nx + y = 60\n\nNow we can substitute the first equation into the second equation:\n\n(x + 30) + y = 60\n\nSimplify and solve for y:\n\ny = 60 - x - 30\ny = 30 - x\n\nSo Navina spends 30 - x dollars per week on credit cards, while her younger sister spends x dollars per week on credit cards.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 174
+ },
+ {
+  "id": "alpaca-eval-42-0008",
+  "instruction": "Pretend to be a character in a post-apocalyptic world. Describe how you survive and the allies you encounter.",
+  "output": "I am a survivor of the apocalypse, and I have learned to adapt to this new reality. My body is weak and fragile, but I have found ways to survive.\n\nMy first challenge was finding food. I scavenged through my surroundings for any edible items that were still viable. I also hunted small animals like rabbits and squirrels for meat. However, as time went on, I realized that there was no shortage of food in the area. I started to focus on gathering resources from the environment instead of relying solely on what I had found.\n\nAs I grew stronger, I began to explore the surrounding areas more. I discovered that there were other survivors who shared my struggles with survival. They provided me with shelter, water, and basic necessities. Together, we formed alliances and worked together to survive.\n\nOne of the most important allies I encountered was a group of miners who had been working in the mine shafts for years. They were skilled miners and knew how to extract valuable resources from the underground tunnels. We worked together to find and extract the resources we needed, and we even helped each other out when we ran into trouble.\n\nAnother ally was a group of farmers who had been living off the land for generations. They had developed their own methods of farming and hunting, which allowed them to survive without the need for modern technology. We worked together to hunt game and gather resources, and we even traded our surplus food with them.\n\nTogether, we faced many challenges and obstacles, but we persevered. We learned to adapt to the harsh conditions of the post-apocalyptic world and found strength in our unity. We survived and emerged victorious, thanks to the support of those around us.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "vicuna",
+  "finished": true,
+  "new_tokens": 337
+ },
+ {
+  "id": "alpaca-eval-42-0009",
+  "instruction": "Can you tell me how to make chocolate chip cookies?",
+  "output": "Sure, here's a recipe for making chocolate chip cookies:\n\nIngredients:\n- 1 cup all-purpose flour\n- 1/2 cup unsalted butter, softened\n- 1/4 cup granulated sugar\n- 1 tsp baking powder\n- 1 tsp salt\n- 1/2 cup dark brown sugar\n- 1 egg\n- 1 tsp vanilla extract\n\nInstructions:\n\n1. Preheat your oven to 350°F (175°C).\n\n2. In a medium bowl, whisk together the flour and baking powder.\n\n3. In another bowl, beat the butter and sugar until light and fluffy.\n\n4. Add in the eggs, one at a time, beating each well after adding in the next. After each addition, stir in the vanilla extract.\n\n5. Gradually add in the dry ingredients, mixing just until combined.\n\n6. Fold in the chocolate chips.\n\n7. Roll out the dough on a floured surface into a circle about 1/4 inch thick.\n\n8. Place the dough onto a greased cookie sheet and bake for 10-12 minutes or until golden brown.\n\n9. Remove from the oven and let cool completely before slicing and serving.\n\nEnjoy your delicious homemade chocolate chip cookies!",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 255
+ },
+ {
+  "id": "alpaca-eval-42-0010",
+  "instruction": "Write a Jira ticket for the given task.\n\nNew Employee onboarding",
+  "output": "Task: New Employee onboarding\n\nDescription:\n\nThe new employee has been assigned to our team and is expected to start their onboarding process. The following tasks need to be completed by the new employee:\n\n1. Introduction of the company culture, mission statement, and values.\n2. Training in the use of company software and tools.\n3. Informational sessions with department managers and supervisors.\n4. Onboarding training sessions with the team leader.\n5. Assistance with job-related skills such as technical skills, communication skills, and time management skills.\n\nDue date: 09/07/2021\n\nPriority: High\n\nAssignee: [Name]\n\nOwner: [Team Name]\n\nStatus: In Progress\n\nComments: \n\nPlease review the above tasks and ensure that they are completed before the deadline. If any issues arise during the onboarding process, please contact the team manager or supervisor immediately.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 181
+ },
+ {
+  "id": "alpaca-eval-42-0011",
+  "instruction": "How can you determine if a person is genuinely interested in a conversation or simply being polite?",
+  "output": "There are several ways to determine if a person is genuinely interested in a conversation:\n\n1. Ask open-ended questions: Instead of asking yes/no questions, ask open-ended questions that encourage the person to share their thoughts and feelings.\n\n2. Listen actively: Pay attention to what the person is saying and try to understand their perspective.\n\n3. Avoid interrupting: If someone is talking about something important, don't interrupt them. Wait for them to finish before responding.\n\n4. Be empathetic: Try to put yourself in the other person's shoes and see things from their point of view.\n\n5. Look for nonverbal cues: Pay attention to facial expressions, body language, and tone of voice to gauge whether the person is genuinely interested in the conversation or just being polite.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "vicuna",
+  "finished": true,
+  "new_tokens": 155
+ },
+ {
+  "id": "alpaca-eval-42-0012",
+  "instruction": "Consider the best time of year to visit the given city, and provide your reasons for choosing that time.\n\nSydney, Australia",
+  "output": "The best time of year to visit Sydney is during the summer months (June-August) when temperatures are mild and pleasant. This is also a great time to enjoy outdoor activities such as beach trips, walking tours, and cultural experiences. Additionally, many attractions in Sydney are open from mid-May until mid-September, which provides ample opportunities for sightseeing and relaxation. The city's warm weather and beautiful beaches make it an ideal destination for those seeking a relaxing vacation.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 93
+ },
+ {
+  "id": "alpaca-eval-42-0013",
+  "instruction": "Hi, I'd like to learn how to play racquetball. Can you explain the game to me?",
+  "output": "Sure! Racquetball is a fast-paced sport that involves two teams of four players each using rackets and balls to hit the ball back and forth on a court or net. The objective is to score points by hitting the ball over the opponent's net with the ball, while also avoiding their shots.\n\nThe game starts with both teams having 10 seconds to prepare for the match. The first player in line (the \"first\" player) takes the first shot, followed by the second player, then the third player, and so on until all players have had one turn. During this time, the opposing team has 5 seconds to prepare for the next shot.\n\nWhen it's your turn, you must hit the ball over the opponent's net without allowing them to do so. If you miss, you lose a point. If you hit the ball over the net, you gain a point. The game continues until one team scores 3 points before the other team does.\n\nTo win the game, you need to score at least 2 points before the other team does. You can only score if you are ahead by more than 1 point after the first set. If you score 3 points before the other team does, you win the game.\n\nOverall, racquetball is a fun and exciting sport that requires quick reflexes, good hand-eye coordination, and strategic planning. With practice and patience, anyone can become a skilled racquetball player.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 294
+ },
+ {
+  "id": "alpaca-eval-42-0014",
+  "instruction": "Describe how to prepare the given food in your own words. Note down the ingredients you will need and the steps you will take to prepare them.\n\nChewy Chocolate Chip Cookies",
+  "output": "Ingredients:\n- 1 cup all-purpose flour\n- 1/2 cup unsalted butter, softened\n- 1/4 cup granulated sugar\n- 1 tsp baking powder\n- 1 tsp salt\n- 3/4 cup chocolate chips (chopped)\n- 1 egg\n- 1 tsp vanilla extract\n\nInstructions:\n\n1. Preheat oven to 350°F.\n2. In a medium bowl, whisk together flour, butter, sugar, baking powder, and salt until well combined.\n3. Add chocolate chips and egg to the mixture and mix until just combined.\n4. Fold in vanilla extract.\n5. Roll dough into small balls and place on a lined baking sheet.\n6. Bake for 8-10 minutes or until edges are lightly golden brown.\n7. Remove from oven and let cool completely before slicing and serving. Enjoy!",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "selfinstruct",
+  "finished": true,
+  "new_tokens": 179
+ },
+ {
+  "id": "alpaca-eval-42-0015",
+  "instruction": "How far away is Saggitarius A*, the black hole in the center of the milky way galaxy, from Earth and can you please provide that distance in light years and parsecs? Can you please also compare that distance to the distance of the center of the Andromeda galaxy from Earth?",
+  "output": "Sagitarius A* is approximately 26,000 light-years (15,743 parsecs) away from Earth. The center of the Andromeda galaxy is about 26,000 parsecs (8,900 light-years) away from Earth.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "oasst",
+  "finished": true,
+  "new_tokens": 62
+ },
+ {
+  "id": "alpaca-eval-42-0016",
+  "instruction": "What kind of foods do they eat in Thailand",
+  "output": "Thailand is known for its diverse cuisine, and there are many different types of dishes that people can enjoy. Some popular Thai dishes include:\n\n1. Pad Thai - a stir-fry dish made with rice noodles, chicken or shrimp, vegetables, and protein.\n\n2. Tom Yum Soup - a soup made with beef broth, tofu, and vegetables.\n\n3. Som Tam - a noodle soup made with egg noodles, chicken or vegetable broth, and protein.\n\n4. Pad Moi - a spicy noodle soup made with egg noodles, chicken or vegetable broth, and protein.\n\n5. Khao Soi - a sweet and sour soup made with chicken or fish, coconut milk, and protein.\n\n6. Tom Kha Tea - a tea made from green tea leaves and spices such as cinnamon, cardamom, and cloves.\n\n7. Mango Sticky Rice - a dessert made with sticky rice, mangoes, and coconut milk.\n\n8. Fried Chicken - a popular dish in Thailand, often served with a side of fried rice.\n\n9. Pad Thai Salad - a salad made with mixed greens, peanuts, and protein.\n\n10. Fish Curry - a seafood curry made with chicken or shrimp, vegetables, and protein.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 247
+ },
+ {
+  "id": "alpaca-eval-42-0017",
+  "instruction": "How do I detail a car?",
+  "output": "I don't have the capability to provide detailed information about cars. However, here are some general tips on how to detail a car:\n\n1. Check the condition of the car: before detailing it, inspect the car for any damage or wear and tear. Look for signs of rust, dents, scratches, or other damages.\n\n2. Remove any unnecessary parts: remove any accessories that you don't need during the detailing process. This includes anything from the headlights to the tires.\n\n3. Clean the exterior: use a soft-bristled brush to clean the exterior of the car. Pay special attention to areas like the front bumper, fenders, and windows.\n\n4. Sand the interior: sand the interior of the car using a fine-grit sandpaper. Use a soft-bristled brush to remove any dust or debris.\n\n5. Apply paint: once the exterior is cleaned, apply the desired color and finish coat of paint. Follow the manufacturer's instructions carefully.\n\n6. Inspect the engine: check the engine for any damage or issues. If necessary, replace any worn-out parts.\n\n7. Test drive: test drive the car thoroughly after detailing to ensure everything is working correctly. Make sure there are no leaks or problems with the brakes, suspension, or other systems.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 257
+ },
+ {
+  "id": "alpaca-eval-42-0018",
+  "instruction": "I want to start saving some money by growing my own food. Can I do this during the winter with an indoor garden?",
+  "output": "Yes, you can definitely grow your own food during the winter months in an indoor garden. Here are a few tips:\n\n1. Choose a sunny spot: Make sure that your indoor garden gets plenty of sunlight throughout the day.\n\n2. Use a well-draining soil: Indoor gardens require well-draining soil to prevent waterlogging and root rot.\n\n3. Provide proper drainage: Ensure that your plants have good drainage to prevent them from becoming waterlogged or drowning.\n\n4. Keep it moist but not wet: Indoor gardens should be kept moist but not wet as they don't need much moisture.\n\n5. Water regularly: Water your plants regularly to keep them healthy and happy.\n\n6. Harvest regularly: Harvest your vegetables and fruits regularly to ensure they continue to produce.\n\n7. Rotate crops: Rotate your crops every few years to prevent soil-borne diseases and pests.\n\n8. Consider using hydroponics: Hydroponic systems allow for more efficient use of water and nutrients, which can help save on costs and reduce waste.",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "helpful_base",
+  "finished": true,
+  "new_tokens": 204
+ },
+ {
+  "id": "alpaca-eval-42-0019",
+  "instruction": "i'm working on a spatial analysis project and am looking for questions I can answer with it related housing and crime analysis, do you have suggestions? ",
+  "output": "1. What is the relationship between the number of households in a given area and the average crime rate per capita?\n\n2. How does the distribution of crimes within a specific neighborhood compare to other neighborhoods in the same city or county?\n\n3. Are there any areas where crime rates are higher than others, based on factors such as income level, age, race/ethnicity, etc.\n\n4. What is the correlation between the number of police officers on duty and the overall crime rate in a given area?\n\n5. Is there a correlation between the number of vacant homes in a given area and the crime rate in that area?\n\n6. Do certain types of crimes (such as drug-related) tend to occur more frequently in certain neighborhoods compared to others?\n\n7. What is the relationship between the number of parking spaces available in a given area and the overall crime rate in that area?\n\n8. Are there any patterns in the distribution of crimes across different types of property (e.g., residential, commercial, industrial) in a given area?\n\n9. What is the relationship between the number of people living in a given area and the overall crime rate in that area?\n\n10. Are there any trends in the distribution of crimes by gender or ethnicity in a given area over time?",
+  "generator": "qwen2.5-0.5b-sft",
+  "dataset": "alpaca_eval",
+  "category": "koala",
+  "finished": true,
+  "new_tokens": 255
+ }
+]

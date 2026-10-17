@@ -2,7 +2,7 @@
 
     python scripts/plot_metrics.py            # -> outputs/plots/{sft,dpo,lora_dpo}.png
 
-Reads outputs/<run>/metrics.jsonl. Raw per-step training values are drawn faintly, with an EMA
+Reads outputs/<run>/metrics.jsonl. Raw per-step training values are drawn faintly, with a bias-corrected EMA
 (weight 0.9 on the previous value) on top; validation points are unsmoothed. The dashed vertical
 line marks the step of the saved best checkpoint (min val loss for SFT, max val reward accuracy for DPO).
 """
@@ -27,11 +27,11 @@ def read(run):
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()] if path.exists() else []
 
 
-def ema(values):
-    out, s = [], None
-    for v in values:
-        s = v if s is None else EMA * s + (1 - EMA) * v
-        out.append(s)
+def ema(values):  # bias-corrected, so the first points are not pinned to the first noisy value
+    out, s = [], 0.0
+    for t, v in enumerate(values, 1):
+        s = EMA * s + (1 - EMA) * v
+        out.append(s / (1 - EMA**t))
     return out
 
 

@@ -1,0 +1,232 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{booktabs,graphicx,makecell,xcolor,amsmath,hyperref,tabularx,caption,enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xurl,array}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\hypersetup{colorlinks,urlcolor=blue!60!black,linkcolor=black,citecolor=black}
+\captionsetup{font=small,labelfont=bf}
+\setlist{nosep,leftmargin=1.2em}
+\setlength{\parskip}{3pt}\setlength{\parindent}{0pt}
+\newcommand{\pending}[1]{\textcolor{red}{[#1]}}
+\newcommand{\fp}[1]{\nolinkurl{#1}}
+
+\title{Small-Model Alignment with SFT and DPO\\\large PA2 report}
+\author{GitHub: \href{https://github.com/AyanAnees326/small-model-alignment}{AyanAnees326/small-model-alignment}}
+\date{}
+
+\begin{document}
+\maketitle\vspace{-2.5em}
+
+%=====================================================================
+\section{Repository, Models, and Data}
+
+\textbf{Repository.} \url{https://github.com/AyanAnees326/small-model-alignment} (branch \texttt{testing}).
+Training math is in \fp{alignment/core.py} (also behind \fp{submission_adapter.py}), the custom SFT/DPO loop in
+\fp{alignment/train.py}, the TRL/LoRA run in \fp{alignment/train_lora_dpo.py}, generation in
+\fp{alignment/generate.py}, blinded pair construction in \fp{alignment/pairs.py} and the Kaggle judge in
+\fp{scripts/judge_pairwise_kaggle.py}. \fp{scripts/run_local_pipeline.sh} reruns every stage except judging.
+
+\textbf{Models.} SFT and both DPO runs start from \texttt{Qwen/Qwen2.5-0.5B} (base, 494M parameters); the
+persona run uses \texttt{HuggingFaceTB/SmolLM2-360M-Instruct}.
+
+\textbf{Training data} (built by \fp{alignment/data.py}; exact Hub revisions in \fp{outputs/data_manifest.json}).
+Each split is a seeded sample (\texttt{random.Random("42-<track>-<split>")}) of the rows passing the filters:
+\begin{itemize}
+\item \textbf{SFT} (30,000 train / 1,000 val): \texttt{HuggingFaceH4/ultrachat\_200k} \texttt{train\_sft} /
+  \texttt{test\_sft}, first user$\to$assistant turn only, kept only if prompt + response + EOS fits in 512 tokens
+  (so the model always sees where an answer ends).
+\item \textbf{HH-RLHF DPO} (15,000 / 1,000): \texttt{Anthropic/hh-rlhf} \texttt{harmless-base} + \texttt{helpful-base}
+  \texttt{train}/\texttt{test}; single-turn conversations only (one Human and one Assistant turn), identical
+  prompt in chosen and rejected, chosen $\neq$ rejected, formatted prompt $\le$ 256 tokens.
+\item \textbf{UltraFeedback DPO} (15,000 / 1,000): \texttt{HuggingFaceH4/ultrafeedback\_binarized}
+  \texttt{train\_prefs}/\texttt{test\_prefs}; ties (\texttt{score\_chosen = score\_rejected}) dropped, prompt $\le$ 256 tokens.
+\item \textbf{Persona DPO} (200 train / 20 held-out eval): \fp{data/persona_lora/ramsay_style_preferences.json},
+  shuffled with seed 42.
+\end{itemize}
+Responses are never filtered for DPO; prompt + response + EOS is truncated at 512 tokens (EOS can be cut).
+
+\textbf{Fixed evaluation sets} (all in \fp{eval_sets/}):
+AlpacaEval-300 (\fp{alpaca_eval_300_seed42.json}: \fp{random.Random(42).sample(range(805),300)} of
+\texttt{tatsu-lab/alpaca\_eval}, in sampled order) for SFT vs UltraFeedback-DPO;
+the provided synthetic helpful/harmless set (\fp{hh_rlhf_eval_300_seed42.json}, 300 prompts, 10 categories
+$\times$ 30) for SFT vs HH-DPO; and a 32-prompt persona set written for this project
+(\fp{persona_style_eval.json}: 10 cooking, 8 coding, 8 general help, 6 safety-sensitive) for SmolLM2 vs LoRA-DPO.
+
+\textbf{Prompt format} (SFT, DPO and evaluation of all Qwen models; no system prompt):\\
+\hspace*{1.2em}\texttt{<|im\_start|>user\textbackslash n\{instruction\}<|im\_end|>\textbackslash n<|im\_start|>assistant\textbackslash n}\\
+followed by the response and the tokenizer EOS \texttt{<|endoftext|>} (id 151643, also the pad token; labels are
+built from positions, so padding never masks a real EOS). SmolLM2 uses its own chat template both in TRL and at
+generation time, which inserts its default system prompt. \textbf{Seed} 42 for data sampling, shuffling,
+initialisation of LoRA weights and A/B order.
+
+%=====================================================================
+\section{Experimental Configuration}
+
+\begin{table}[h]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}L{0.95cm}L{2.3cm}YL{1.1cm}L{1.9cm}L{1.15cm}L{1.1cm}L{0.6cm}L{2.0cm}L{1.6cm}@{}}
+\toprule
+Run & Trainable parameters & Optimizer; peak LR; schedule; warmup; weight decay; clip & Batch dev$\times$acc = eff. & Precision & Max len (prompt) & Epochs / steps & Seed & DPO $\beta$; reference & Eval decoding \\
+\midrule
+SFT & Full FT of Qwen2.5-0.5B (494M) & AdamW; $2{\times}10^{-5}$; cosine to 0; 3\% linear (28 steps); 0.1 on matrices; 1.0 & $2\times16$ $=32$ & fp32 weights, fp16 autocast, GradScaler $2^{16}$, grad.\ ckpt. & 512 (--) & 1 / 937 & 42 & -- & greedy, ChatML \\
+HH-DPO & Full FT from SFT best & AdamW; $1{\times}10^{-6}$; constant; none; 0; 1.0 & $1\times32$ $=32$ & as SFT, GradScaler $2^{10}$; reference fp16 & 512 (256) & 1 / 468 & 42 & 0.1; frozen SFT best (step 937) & greedy, ChatML \\
+UF-DPO & Full FT from SFT best & AdamW; $1{\times}10^{-6}$; constant; none; 0; 1.0 & $1\times32$ $=32$ & as HH-DPO & 512 (256) & 1 / 468 & 42 & 0.1; frozen SFT best (same) & greedy, ChatML \\
+LoRA-DPO & LoRA on SmolLM2-360M-Instruct: $r{=}16$, $\alpha{=}32$, dropout 0.05; q, k, v, o, gate, up, down\_proj; 8.7M (2.4\%) & AdamW; $5{\times}10^{-5}$; cosine; 10\% linear; 0; 1.0 & $4\times2$ $=8$ & fp32 weights, fp16 AMP & 512 (--) & 3 / 75 & 42 & 0.1; base model with adapter disabled & greedy, SmolLM2 template \\
+\bottomrule
+\end{tabularx}
+\caption{Values used for the submitted checkpoints (each run's \fp{config.json}). AdamW uses $\beta=(0.9,0.999)$,
+$\epsilon=10^{-8}$. Steps exclude the trailing partial accumulation window (SFT 29,984 examples, DPO 14,976 pairs,
+LoRA 200 pairs $\times$ 3 epochs). Validation: SFT every 100 steps on 1,000 examples, best = lowest loss; DPO at
+step 0 and every 50 steps on 1,000 pairs, best = highest reward accuracy (strict $>$); LoRA at step 0 and every 5
+steps on 20 held-out pairs, final adapter submitted. \textbf{Decoding} (all generations): greedy
+(\texttt{do\_sample=False}, so temperature and top-$p$ are unused), max 512 new tokens, repetition penalty 1.1 (Table~\ref{tab:pilot}), no
+length penalty, no $n$-gram blocking, stop at EOS or \texttt{<|im\_end|>}; fp16, batch 16, left padding. ChatML =
+the prompt of \S1 (no system prompt); SmolLM2 runs use the model's own chat template.}
+\label{tab:config}
+\end{table}
+
+%=====================================================================
+\section{Parameter Choices and Deviations}
+
+\begin{table}[h]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}L{2.3cm}L{2.0cm}L{2.6cm}Y@{}}
+\toprule
+Setting & Guide & Used & Why, and effect \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Resource-driven}} \\
+Hardware & Kaggle T4$\times$2 & 1$\times$ AMD RX 6700 XT 12\,GB (ROCm) & Kaggle-free local runs. Policy and frozen reference share one GPU, so the reference is kept in fp16 (allowed by the manual's memory tip). No effect on the method. \\
+Eval micro-batch & -- & 2 & The first SFT attempt crashed at its first validation (\texttt{hipErrorLaunchFailure}, batch 8: fp32 logits over the 151k vocabulary next to Adam state oversubscribed 12\,GB; log kept in \fp{outputs/sft/crash_eval_bs8.log}). The run was restarted from scratch with batch 2; validation numbers are unchanged by the batch size. \\
+Activation memory & -- & gradient checkpointing & Required to fit a fp32 policy + Adam + fp16 reference in 12\,GB. Exact same gradients, slower steps. \\
+Resumable state & -- & \fp{<run>/last/state.pt} every eval & Model, optimizer, scheduler, scaler and step are saved; a resumed toy run reproduced the uninterrupted metrics exactly. SFT ran uninterrupted (91 min); DPO: \pending{}. \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Measurement / performance-driven}} \\
+Decoding & greedy; anti-repetition optional, same for SFT and DPO & repetition penalty 1.1, every model & Sanity check showed greedy loops; in a 40-prompt pilot (Table~\ref{tab:pilot}) the SFT model looped to the 512-token cap on 7/40 prompts at 1.0 and on 0/40 at 1.1, with fluent output. Applied identically to all generations, so each comparison isolates the checkpoint. \\
+Validation reference log-probs & frozen SFT reference (fp16 here) & SFT weights scored by the policy (fp32 + autocast) once at step 0, cached & With the fp16 reference, the step-0 validation reward accuracy was 0.58 instead of the manual's exact 0: fp16-vs-fp32 rounding gave tiny non-zero $r_w-r_l$ that the strict $r_w>r_l$ counts. Same reference \emph{weights}, so validation now measures movement away from SFT only (step 0: accuracy 0, margin 0, loss $\ln 2$). Training still uses the fp16 frozen copy. \\
+DPO GradScaler init & -- & $2^{10}$ (SFT $2^{16}$) & Set a priori, not tuned: DPO back-propagates through summed sequence log-probs, so gradients are larger than SFT's token mean and a lower initial scale limits overflow-skipped updates in a 468-step run. Skipped steps: \pending{}. (SFT never overflowed: scale stayed at $2^{16}$.) \\
+DPO optimizer & RMSprop or AdamW & AdamW, WD 0 & Within the guide; identical for both DPO runs. \\
+LoRA-DPO & (student choice) & Table~\ref{tab:config} & Justified in \S4. \\
+\bottomrule
+\end{tabularx}
+\caption{Changes from the guide configuration. SFT and DPO otherwise use the guide values (Table~\ref{tab:config}).}
+\label{tab:dev}
+\end{table}
+
+\begin{table}[h]\centering\scriptsize
+\begin{tabular}{llrrrr}
+\toprule
+SFT model, first 20 prompts & Repetition penalty & Hit 512 tokens & Mean words & Mean distinct-4 & Min distinct-4 \\
+\midrule
+AlpacaEval-300 & 1.0 & 3/20 & 214 & 0.828 & 0.145 \\
+               & 1.1 & 0/20 & 172 & 0.956 & 0.604 \\
+HH eval-300    & 1.0 & 4/20 & 200 & 0.709 & 0.012 \\
+               & 1.1 & 0/20 & 126 & 0.992 & 0.925 \\
+\bottomrule
+\end{tabular}
+\caption{Decoding pilot (greedy; \fp{outputs/generations/pilot/}). Distinct-4 = unique / total word 4-grams in a
+response. Most of the length drop is the removed loops: on prompts that did not loop at 1.0, mean length goes
+176$\to$167 words (Alpaca) and 156$\to$132 (HH).}
+\label{tab:pilot}
+\end{table}
+
+%=====================================================================
+\section{Training Behavior}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.495\linewidth]{../outputs/plots/sft.png}\hfill
+\includegraphics[width=0.495\linewidth]{../outputs/plots/lora_dpo.png}
+\caption{Left: SFT training loss (faint: per step; solid: EMA 0.9) and unsmoothed validation loss; dashed line =
+saved best checkpoint. Right: LoRA-DPO (TRL) loss and preference diagnostics on the 20 held-out persona pairs.}
+\label{fig:sft}
+\end{figure}
+
+\begin{figure}[h]\centering
+\includegraphics[width=\linewidth]{../outputs/plots/dpo.png}
+\caption{DPO runs from the same SFT checkpoint. Columns: DPO loss, reward accuracy, reward margin
+$r_w - r_l$ (with $r = \beta\log\pi_\theta/\pi_{\text{ref}}$ summed over response tokens). Training curves
+(faint: per step; solid: EMA 0.9) and validation points (1,000 held-out pairs, step 0 and every 50 steps);
+dashed line = submitted checkpoint.}
+\label{fig:dpo}
+\end{figure}
+
+\textbf{SFT} (Fig.~\ref{fig:sft}, 91 min). Validation loss was flat at 1.348--1.349 over steps 100--200 (peak learning
+rate) and then fell at every evaluation as the cosine schedule decayed, to 1.292 at step 937; the last two evaluations
+differ by $6{\times}10^{-5}$, so the run had converged for this budget. Train loss (mean of the last 50 steps 1.305)
+stays close to validation loss, so one epoch shows no overfitting, and the best-by-validation checkpoint is the final
+step, used as DPO initialisation and reference. The loss starts low (1.34 over the first 50 steps) because the Qwen2.5
+base model has seen instruction-style text in pre-training; the visible gain is behavioural: in the sanity check the
+base model never stopped (4/5 prompts hit 512 tokens), the SFT model ended all 5 AlpacaEval answers with EOS.
+Pre-clip gradient norms were 3--6 (median 4.0), so clipping at 1.0 was active at every step; with Adam this mostly
+reweights steps rather than shrinking them. No fp16 overflow occurred (scale stayed at $2^{16}$).
+
+\textbf{DPO.} \pending{}
+
+\textbf{LoRA-DPO choices.} The target is a narrow change of tone learned from 200 pairs, so capacity is not the
+constraint. \emph{Rank 16, $\alpha = 32$}: low ranks are enough for adaptation~\cite{lora}; 16 leaves room for tone and
+vocabulary changes in every layer while training 8.7M of 362M parameters; $\alpha = 2r$ keeps the update scale at 2.
+\emph{Target modules}: all attention and MLP projections, since adapting every linear layer is what brings LoRA close
+to full fine-tuning~\cite{qlora} and word choice is largely carried by the MLPs. \emph{LR $5{\times}10^{-5}$}: far
+above the full-model DPO rate because LoRA's $B$ matrix starts at zero and the update is low-rank, but below typical
+LoRA SFT rates ($10^{-4}$ to $2{\times}10^{-4}$) because DPO on 200 pairs over-optimises quickly and the persona
+must not cost usefulness or safety. \emph{Batch 8} gives 25 updates per epoch; a larger batch would leave too few.
+\emph{3 epochs} (75 steps) let the cosine schedule complete while the held-out reward accuracy, checked every 5 steps,
+shows whether the model only memorises the training pairs. \pending{result}
+
+%=====================================================================
+\section{DPO-versus-SFT Results}
+
+\begin{table}[h]\centering\small
+\resizebox{\linewidth}{!}{\input{generated/judge.tex}}
+\caption{Pairwise judgments of the submitted checkpoints. W/T/L = candidate wins/ties/losses; WR with ties as
+half and without ties; Unk.\ = unparseable verdicts; Fail = pairs in batches that failed all 3 attempts;
+Retried = pairs judged only after a failed attempt; A/B = how often the judge picked each slot.}
+\label{tab:judge}
+\end{table}
+
+%=====================================================================
+\section{Interpretation and Error Analysis}
+
+\pending{filled after judging}
+
+%=====================================================================
+\section{Limitations and Reproducibility}
+
+\textbf{Limitations.}
+(i) \emph{One LLM judge.} All verdicts come from \pending{judge} with a single prompt per set; LLM judges are known
+to favour longer and more confident answers and one answer slot. Order is randomised per pair (seed 42) and the A/B
+pick counts are reported in Table~\ref{tab:judge}, but length bias is not controlled, so length statistics are
+reported next to the win rates.
+(ii) \emph{Small evaluation sets.} With $n=300$ the 95\% interval of a win rate near 50\% is about
+$\pm5.7$ points; the 32-prompt persona set (6 safety prompts) only supports coarse conclusions.
+(iii) \emph{Single seed} for data sampling, training and A/B order; no run was repeated, so seed variance is unknown.
+(iv) \emph{Synthetic HH evaluation set}: the provided 300 prompts are templated, so per-category differences can
+reflect a template rather than a behaviour.
+(v) \emph{Hardware.} Runs used one 12\,GB AMD GPU (ROCm) rather than the T4$\times$2 reference setup; fp16 kernels
+differ, so numbers will not match a Kaggle rerun bit-for-bit. Only the judging step ran on Kaggle.
+(vi) The refusal-keyword rate in Table~\pending{} is a crude string match, used only as a sanity signal.
+
+\textbf{Reproducing the tables.} \fp{scripts/run_local_pipeline.sh} (data $\to$ SFT $\to$ sanity check $\to$
+generations $\to$ LoRA-DPO $\to$ both DPO runs $\to$ pairs $\to$ plots) and \fp{notebooks/02_kaggle_judge.ipynb}
+(judging). \fp{scripts/report_tables.py} rebuilds every results table of this report from the files below.
+\begin{itemize}
+\item Data: \fp{outputs/data_manifest.json} (sources, revisions, filters, counts); evaluation prompts in \fp{eval_sets/}.
+\item Configs and metrics per run (\fp{sft}, \fp{dpo_hh}, \fp{dpo_uf}, \fp{lora_dpo}):
+  \fp{outputs/<run>/config.json}, \fp{metrics.jsonl}, \fp{summary.json} (best step); plots in \fp{outputs/plots/}.
+\item Generations: \fp{outputs/generations/<model>_<set>.json} (+ \fp{.meta.json} with decoding settings);
+  sanity checks in \fp{outputs/generations/sanity/}; length statistics in \fp{outputs/eval/generation_stats.json}.
+\item Blinded pairs: \fp{outputs/eval/<comparison>_pairs.jsonl} (slot-to-model mapping kept in the \fp{hidden} field, never sent to the judge);
+  judgments \fp{<comparison>_judged.jsonl}, \fp{_judged_summary.json}, unresolved batches \fp{_failures.jsonl}.
+\item Checkpoints are not in git (size); they are recreated by the pipeline with the same seed.
+\end{itemize}
+
+{\small
+\begin{thebibliography}{9}\setlength{\itemsep}{0pt}
+\bibitem{dpo} R.~Rafailov et al. Direct Preference Optimization: Your Language Model is Secretly a Reward Model. NeurIPS 2023.
+\bibitem{hh} Y.~Bai et al. Training a Helpful and Harmless Assistant with RLHF. 2022.
+\bibitem{lora} E.~Hu et al. LoRA: Low-Rank Adaptation of Large Language Models. ICLR 2022.
+\bibitem{qlora} T.~Dettmers et al. QLoRA: Efficient Finetuning of Quantized LLMs. NeurIPS 2023.
+\bibitem{alpaca} Y.~Dubois et al. Length-Controlled AlpacaEval. 2024.
+\bibitem{hf} Hugging Face. Transformers, TRL (DPOTrainer) and PEFT documentation.
+\end{thebibliography}}
+\end{document}

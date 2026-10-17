@@ -1,0 +1,9 @@
+{
+ "best": {
+  "step": 937,
+  "val_loss": 1.2923368711764325,
+  "val_tokens": 214926
+ },
+ "final_step": 937,
+ "minutes": 91.1
+}

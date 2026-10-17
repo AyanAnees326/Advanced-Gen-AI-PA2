@@ -1,0 +1,10 @@
+\begin{tabular}{lrrrlrrrl}
+\toprule
+Comparison & $n$ & WR orig. & WR swap. & WR both orders (95\% CI) & Same (\%) & Rev. & A (\%) & better/worse, $p$ \\
+\midrule
+UF-DPO vs SFT (AlpacaEval-300) & 300 & 46.7 & 46.3 & \textbf{46.5} (42.2--50.7) & 66.0 & 66 & 63.2 & 87/112, 0.089 \\
+HH-DPO vs SFT (HH eval-300) & 300 & 59.3 & 56.7 & \textbf{58.0} (50.7--65.2) & 80.3 & 37 & 55.5 & 147/101, 0.0042 \\
+LoRA-DPO vs SmolLM2 (persona: style) & 32 & 67.2 & 54.7 & \textbf{60.9} (49.2--72.7) & 50.0 & 4 & 65.2 & 16/9, 0.23 \\
+LoRA-DPO vs SmolLM2 (persona: usefulness/safety) & 32 & 39.1 & 35.9 & \textbf{37.5} (22.7--53.1) & 81.2 & 4 & 53.2 & 10/18, 0.18 \\
+\bottomrule
+\end{tabular}

@@ -214,6 +214,16 @@ Retried = pairs judged only after a failed attempt; A/B = how often the judge pi
 \label{tab:judge}
 \end{table}
 
+\begin{table}[h]\centering\small
+\resizebox{\linewidth}{!}{\input{generated/order.tex}}
+\caption{Order check: every pair judged a second time with responses A and B exchanged. WR (ties as half) in the
+original randomised-order pass, in the swapped pass, and per prompt averaged over both orders with a bootstrap 95\% CI
+over distinct instructions. Same = prompts with the same outcome in both orders; Rev.\ = win in one order, loss in
+the other; A = share of decisive verdicts (both passes) for slot A; better/worse = prompts the candidate wins/loses
+on balance, with a two-sided exact sign test.}
+\label{tab:order}
+\end{table}
+
 \textbf{Procedure.} Judge: \texttt{google/gemini-3.6-flash} through the Kaggle Benchmarks model proxy
 (\fp{notebooks/02_kaggle_judge.ipynb}), reading only the saved pair files. Each request holds 5 pairs in a fresh chat;
 the judge sees the rubric, the instruction and ``Response A''/``Response B'' only (no pair ids or model names; which
@@ -227,27 +237,34 @@ while still answering; insults replacing content should not win) and \emph{usefu
 general plus safe-redirection guidance, with tone explicitly ignored). The HH set uses the general criteria plus a
 safety clause (reward refusal of genuinely harmful requests, privacy protection, calibrated uncertainty and safe
 redirection; penalise harmful compliance and needless refusal of benign requests) and the set's per-prompt guidance
-on expected behaviour. All 664 judged pairs parsed on the first attempt: 0 retries, 0 failures, 0 unknown.
+on expected behaviour. To measure position bias, every pair was then judged a second time with A and B exchanged
+(\fp{<comparison>_swapped_pairs.jsonl}, Table~\ref{tab:order}). All 1,328 judged pairs (664 per pass) parsed on the
+first attempt: 0 retries, 0 failures, 0 unknown.
 
 \textbf{UltraFeedback DPO vs.\ SFT} (AlpacaEval, $n=300$): 112 wins, 56 ties, 132 losses; win rate 46.7\% with ties
 as half (bootstrap 95\% CI 41.7--51.8) and 45.9\% without ties. A two-sided sign test on the 244 decisive pairs gives
 $p=0.22$: SFT is nominally ahead, but the difference is not significant. \emph{Position bias}: the judge chose slot A
 in 161 of 244 decisive verdicts (66\%). DPO was in slot A for 159 pairs (win rate 59.1\%) and in slot B for 141
-(32.6\%); the mean of the two slot-conditional rates is 45.9\%, so the randomised order removes the bias from the
-average and the conclusion is unchanged, but single verdicts are noisy.
+(32.6\%). The swapped pass agrees (46.3\%); averaged over both orders the win rate is 46.5\% (CI 42.2--50.7; DPO
+better on balance on 87 prompts, worse on 112, $p=0.09$). Only 66\% of prompts keep their outcome when the order is
+reversed and 66 flip between win and loss, so single verdicts are unreliable while the aggregate is stable.
 
 \textbf{HH-RLHF DPO vs.\ SFT} (HH eval set, $n=300$, safety rubric): 167 wins, 22 ties, 111 losses; win rate 59.3\%
 with ties as half (CI 54.0--64.8) and 60.1\% without ties; sign test on the 278 decisive pairs $p=0.001$, so DPO is
 better. \emph{Position bias} is smaller than on AlpacaEval: slot A won 147 of 278 decisive verdicts (53\%); DPO's win
 rate is 62.3\% in slot A (146 pairs) and 56.5\% in slot B (154). \emph{Repeated prompts}: the provided set has only
 185 distinct prompts (71 occur 2--6 times), so pairs are not independent; a bootstrap over distinct prompts widens
-the CI to 51.6--67.1, still above 50\%. For 35 repeats both answers were identical to an earlier copy but shown in
-swapped slots; the judge gave the same outcome in 33.
+the CI to 51.6--67.1. \emph{Both orders}: the swapped pass gives 56.7\% and the two-order average 58.0\% (CI over
+distinct prompts 50.7--65.2); 80\% of prompts keep their outcome and DPO is better on balance on 147 prompts, worse
+on 101 ($p=0.004$), so the HH gain is not an order artefact.
 
 \textbf{LoRA-DPO persona vs.\ SmolLM2-360M-Instruct} (reported separately; $n=32$, 6 safety-sensitive). \emph{Style}:
-17/9/6, win rate 67.2\% (CI 53.1--81.2, sign test $p=0.035$): the adapter adopts the persona more often than the base
-model. \emph{Usefulness/safety}: 12/1/19, win rate 39.1\% (CI 23.4--56.2, $p=0.28$): the persona costs some
-usefulness, not significantly at this $n$. The two numbers answer different questions and are not combined.
+17/9/6, win rate 67.2\% (CI 53.1--81.2, sign test $p=0.035$). The swapped pass is weaker (13/9/10, 54.7\%): only
+half of the prompts keep their style verdict when the order is reversed, and over both orders the win rate is
+60.9\% (CI 49.2--72.7; 16 prompts better, 9 worse, $p=0.23$). The adapter adopts the persona more often than the base
+model, but part of the first-pass margin was position bias. \emph{Usefulness/safety}: 12/1/19, win rate 39.1\% (CI
+23.4--56.2, $p=0.28$); over both orders 37.5\% (CI 22.7--53.1, $p=0.18$), 81\% of verdicts order-stable: the persona
+costs some usefulness, not significantly at this $n$. The two numbers answer different questions and are not combined.
 
 \begin{table}[h]\centering\scriptsize
 \resizebox{\linewidth}{!}{\input{generated/categories.tex}}
@@ -272,7 +289,8 @@ Section~\ref{sec:interp}. The LoRA persona answers are shorter than the base mod
 %=====================================================================
 \section{Interpretation and Error Analysis}\label{sec:interp}
 
-\textbf{AlpacaEval: UltraFeedback DPO is not better than SFT} (3.3 points below 50\%, not significant).
+\textbf{AlpacaEval: UltraFeedback DPO is not better than SFT} (3.3 points below 50\%, 3.5 over both orders; not
+significant).
 \emph{Observation.} The effect is not consistent across prompt types (Table~\ref{tab:cat}). DPO wins
 \emph{vicuna} (66.2\%; open-ended writing, role-play, coding) and ties \emph{koala} (50.8\%), but loses
 \emph{helpful\_base} (37.3\%; short factual questions) and \emph{selfinstruct} (41.6\%; short constrained tasks).
@@ -297,7 +315,7 @@ answers in a clean format and stops at EOS, so there is little formatting headro
 learning rate would increase the shift, but given the category pattern it would likely amplify both the gains and
 the losses.
 
-\textbf{HH-RLHF eval: DPO is better than SFT (+9.3 points, $p=0.001$), mainly because it declines or redirects
+\textbf{HH-RLHF eval: DPO is better than SFT (+9.3 points, $p=0.001$; +8.0 over both orders), mainly because it declines or redirects
 more often, but it is not reliably safe.} \emph{Observation.} The gain is broad: DPO wins 8 of 10 categories, most
 clearly calibration (70.0\%), benign helpfulness and privacy (68.3\% each) and safe transformation (65.0\%);
 legal/financial is even (50.0\%) and self-harm support is the only loss (43.3\%). Length is not the driver: DPO
@@ -329,7 +347,8 @@ DPO complies with 0000 again. A stronger update (more epochs, a higher learning 
 deepen the refusals, but with validation accuracy already flat it would mostly sharpen the same evasive style,
 including on self-harm.
 
-\textbf{Persona: the LoRA adapter is more in character (+17 points, $p=0.035$) and less useful ($-11$ points, n.s.),
+\textbf{Persona: the LoRA adapter is more in character (+17 points, $p=0.035$; +11 and n.s.\ over both orders)
+and less useful ($-11$ points, n.s.),
 and not uniformly safe.} \emph{Observation.} Style wins concentrate in cooking (7/2/1); on coding and general help many
 verdicts are ties where neither answer adopts the voice. Usefulness losses also concentrate in cooking (2/0/8) and
 general help (2/1/5); coding is even (4/0/4) and safety-sensitive prompts favour the adapter (4/0/2).
@@ -354,8 +373,10 @@ and adding distress or emergency prompts whose chosen answer drops the persona w
 \textbf{Limitations.}
 (i) \emph{One LLM judge.} All verdicts come from \texttt{google/gemini-3.6-flash} (Kaggle Benchmarks proxy) with a single prompt per set; LLM judges are known
 to favour longer and more confident answers and one answer slot. This judge preferred slot A
-(66\% of decisive AlpacaEval verdicts, 53\% on HH); order is randomised per pair (seed 42), which cancels the bias in the
-average but not in single verdicts, and length bias is checked only post hoc (Table~\ref{tab:cat}). The style rubric
+(66\% of decisive AlpacaEval verdicts, 53\% on HH). Order is randomised per pair (seed 42) and every pair was also
+judged with the slots swapped (Table~\ref{tab:order}): over both orders the DPO win rates move by at most 1.3 points,
+but persona style drops by 6, and 19--50\% of prompts change outcome with the order, so single verdicts are
+unreliable. Length bias is checked only post hoc (Table~\ref{tab:cat}). The style rubric
 is not purely stylistic: several style reasons cite missing content, so style and usefulness verdicts are correlated.
 No human spot check was done.
 (ii) \emph{Small evaluation sets.} With $n=300$ the 95\% interval of a win rate near 50\% is about
@@ -379,7 +400,8 @@ generations $\to$ LoRA-DPO $\to$ both DPO runs $\to$ pairs $\to$ plots) and \fp{
 \item Generations: \fp{outputs/generations/<model>_<set>.json} (+ \fp{.meta.json} with decoding settings);
   sanity checks in \fp{outputs/generations/sanity/}; length statistics in \fp{outputs/eval/generation_stats.json}.
 \item Blinded pairs: \fp{outputs/eval/<comparison>_pairs.jsonl} (slot-to-model mapping kept in the \fp{hidden} field, never sent to the judge);
-  judgments \fp{<comparison>_judged.jsonl}, \fp{_judged_summary.json}, unresolved batches \fp{_failures.jsonl}.
+  judgments \fp{<comparison>_judged.jsonl}, \fp{_judged_summary.json}, unresolved batches \fp{_failures.jsonl};
+  the A/B-swapped pass in \fp{<comparison>_swapped_*}, both passes combined in \fp{order_debiased_summary.json}.
 \item Checkpoints are not in git (size); they are recreated by the pipeline with the same seed.
 \end{itemize}
 

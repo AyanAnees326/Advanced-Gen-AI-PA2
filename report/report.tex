@@ -160,7 +160,24 @@ base model never stopped (4/5 prompts hit 512 tokens), the SFT model ended all 5
 Pre-clip gradient norms were 3--6 (median 4.0), so clipping at 1.0 was active at every step; with Adam this mostly
 reweights steps rather than shrinking them. No fp16 overflow occurred (scale stayed at $2^{16}$).
 
-\textbf{DPO.} \pending{}
+\textbf{DPO} (Fig.~\ref{fig:dpo}, Table~\ref{tab:dpo}). Step-0 validation is exactly $\ln 2$ / 0 / 0
+(policy = reference, ties count as wrong), so every later point is movement away from SFT.
+\emph{UltraFeedback} (226 min): validation loss fell at every evaluation, 0.693 $\to$ 0.528, and reward accuracy
+jumped to 0.69 by step 50, then crept to 0.738; the last evaluation was the highest, so the submitted checkpoint is
+the final step 468. The margin (0.75) comes mostly from pushing rejected responses down: implicit rewards are
+$-0.11$ (chosen) and $-0.86$ (rejected), i.e.\ both summed log-probs fell (chosen $-342.5 \to -343.6$, rejected
+$-298.5 \to -307.1$), the usual DPO pattern. Training and validation curves overlap, so one epoch at $10^{-6}$ shows
+no overfitting; the slow, still-rising margin suggests the run is learning-rate-limited rather than converged.
+Pre-clip gradient norms were 40--80 (median 57; summed sequence log-probs), so clipping acted on every step, as
+in SFT. The loss scale stayed at $2^{10}$: no step was skipped.
+\emph{HH-RLHF}: \pending{}
+
+\begin{table}[h]\centering\scriptsize
+\input{generated/dpo.tex}
+\caption{DPO validation metrics (1,000 held-out pairs) at step 0, at the submitted best checkpoint and at the final
+step. $\bar r = \beta(\log\pi_\theta - \log\pi_{\text{ref}})$ summed over response tokens.}
+\label{tab:dpo}
+\end{table}
 
 \textbf{LoRA-DPO choices.} The target is a narrow change of tone learned from 200 pairs, so capacity is not the
 constraint. \emph{Rank 16, $\alpha = 32$}: low ranks are enough for adaptation~\cite{lora}; 16 leaves room for tone and

@@ -1,0 +1,14 @@
+{
+ "best": {
+  "step": 468,
+  "val_loss": 0.5277720093727112,
+  "val_reward_acc": 0.7379999756813049,
+  "val_reward_margin": 0.748887836933136,
+  "val_chosen_reward": -0.10890593379735947,
+  "val_rejected_reward": -0.8577938079833984,
+  "val_policy_chosen_logp": -343.5888671875,
+  "val_policy_rejected_logp": -307.06512451171875
+ },
+ "final_step": 468,
+ "minutes": 225.5
+}

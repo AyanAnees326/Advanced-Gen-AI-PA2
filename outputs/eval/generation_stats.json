@@ -50,6 +50,57 @@
    }
   }
  },
+ "dpo_uf_alpaca": {
+  "generator": "qwen2.5-0.5b-dpo-uf",
+  "n": 300,
+  "mean_words": 203.1,
+  "median_words": 209.5,
+  "unfinished_rate": 0.08,
+  "empty": 0,
+  "refusal_rate": 0.01,
+  "by_category": {
+   "helpful_base": {
+    "n": 51,
+    "mean_words": 196.8,
+    "median_words": 213,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "koala": {
+    "n": 60,
+    "mean_words": 236.4,
+    "median_words": 226.5,
+    "unfinished_rate": 0.15,
+    "empty": 0,
+    "refusal_rate": 0.017
+   },
+   "oasst": {
+    "n": 54,
+    "mean_words": 196.1,
+    "median_words": 194.0,
+    "unfinished_rate": 0.093,
+    "empty": 0,
+    "refusal_rate": 0.037
+   },
+   "selfinstruct": {
+    "n": 95,
+    "mean_words": 174.5,
+    "median_words": 162,
+    "unfinished_rate": 0.095,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "vicuna": {
+    "n": 40,
+    "mean_words": 238.7,
+    "median_words": 237.0,
+    "unfinished_rate": 0.025,
+    "empty": 0,
+    "refusal_rate": 0.0
+   }
+  }
+ },
  "lora_persona": {
   "generator": "smollm2-360m-lora-dpo",
   "n": 32,

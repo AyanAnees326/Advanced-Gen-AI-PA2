@@ -78,7 +78,7 @@ def plot_dpo():
     if not runs:
         return
     panels = (("loss", "val_loss", "DPO loss"), ("reward_acc", "val_reward_acc", "reward accuracy"),
-              ("reward_margin", "val_reward_margin", "reward margin  r_w - r_l"))
+              ("reward_margin", "val_reward_margin", "reward margin"))
     fig, axes = plt.subplots(len(runs), 3, figsize=(12, 3.3 * len(runs)), squeeze=False)
     for (run, title), row in zip(runs, axes):
         rows, best = read(run), best_step(run)

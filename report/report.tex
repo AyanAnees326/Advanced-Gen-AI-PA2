@@ -30,7 +30,7 @@ Training math is in \fp{alignment/core.py} (also behind \fp{submission_adapter.p
 \fp{scripts/judge_pairwise_kaggle.py}. \fp{scripts/run_local_pipeline.sh} reruns every stage except judging.
 \emph{Kaggle setup} (\fp{notebooks/01_kaggle_setup.ipynb}, run on GPU T4$\times$2): the repository clones and
 installs without reinstalling PyTorch; the notebook sees two Tesla T4 GPUs and reports PyTorch 2.11.0+cu128,
-Transformers 4.57.6 and Datasets 4.8.5, and the public adapter and edge-case tests pass (16/16).
+Transformers 4.57.6 and Datasets 4.8.5, and the public adapter and edge-case tests pass (16/16 at that commit; the final suite, 19 tests, passes locally).
 
 \textbf{Models.} SFT and both DPO runs start from \texttt{Qwen/Qwen2.5-0.5B} (base, 494M parameters); the
 persona run uses \texttt{HuggingFaceTB/SmolLM2-360M-Instruct}.
@@ -62,7 +62,7 @@ $\times$ 30) for SFT vs HH-DPO; and a 32-prompt persona set written for this pro
 \hspace*{1.2em}\texttt{<|im\_start|>user\textbackslash n\{instruction\}<|im\_end|>\textbackslash n<|im\_start|>assistant\textbackslash n}\\
 followed by the response and the tokenizer EOS \texttt{<|endoftext|>} (id 151643, also the pad token; labels are
 built from positions, so padding never masks a real EOS). SmolLM2 uses its own chat template both in TRL and at
-generation time, which inserts its default system prompt. \textbf{Seed} 42 for data sampling, shuffling,
+generation time, which inserts its default system prompt. \textbf{Loss reductions}: SFT uses the mean NLL over all unmasked response tokens in the batch (\fp{compute_sft_loss}); in training the token count of the whole effective batch is the denominator, so accumulation reproduces the full-batch token mean. DPO scores are summed response-token log-probs and the loss is the batch mean. \textbf{Seed} 42 for data sampling, shuffling,
 initialisation of LoRA weights and A/B order.
 
 %=====================================================================
@@ -102,12 +102,12 @@ Setting & Guide & Used & Why, and effect \\
 Hardware & Kaggle T4$\times$2 & 1$\times$ AMD RX 6700 XT 12\,GB (ROCm) & Kaggle-free local runs. Policy and frozen reference share one GPU, so the reference is kept in fp16 (allowed by the manual's memory tip). No effect on the method. \\
 Eval micro-batch & -- & 2 & The first SFT attempt crashed at its first validation (\texttt{hipErrorLaunchFailure}, batch 8: fp32 logits over the 151k vocabulary next to Adam state oversubscribed 12\,GB; log kept in \fp{outputs/sft/crash_eval_bs8.log}). The run was restarted from scratch with batch 2; validation numbers are unchanged by the batch size. \\
 Activation memory & -- & gradient checkpointing & Required to fit a fp32 policy + Adam + fp16 reference in 12\,GB. Exact same gradients, slower steps. \\
-Resumable state & -- & \fp{<run>/last/state.pt} every eval & Model, optimizer, scheduler, scaler and step are saved; a resumed toy run reproduced the uninterrupted metrics exactly. SFT ran uninterrupted (91 min); DPO: \pending{}. \\
+Resumable state & -- & \fp{<run>/last/state.pt} every eval & Model, optimizer, scheduler, scaler and step are saved; a resumed toy run reproduced the uninterrupted metrics exactly. SFT and UltraFeedback DPO ran uninterrupted (91 and 226 min). A power cut stopped HH-RLHF DPO at step 355; it resumed from the step-350 state (metrics after step 350 are dropped and re-logged). A cut during generation is handled by redoing the incomplete file. \\
 \midrule
 \multicolumn{4}{@{}l}{\textit{Measurement / performance-driven}} \\
 Decoding & greedy; anti-repetition optional, same for SFT and DPO & repetition penalty 1.1, every model & Sanity check showed greedy loops; in a 40-prompt pilot (Table~\ref{tab:pilot}) the SFT model looped to the 512-token cap on 7/40 prompts at 1.0 and on 0/40 at 1.1, with fluent output. Applied identically to all generations, so each comparison isolates the checkpoint. \\
 Validation reference log-probs & frozen SFT reference (fp16 here) & SFT weights scored by the policy (fp32 + autocast) once at step 0, cached & With the fp16 reference, the step-0 validation reward accuracy was 0.58 instead of the manual's exact 0: fp16-vs-fp32 rounding gave tiny non-zero $r_w-r_l$ that the strict $r_w>r_l$ counts. Same reference \emph{weights}, so validation now measures movement away from SFT only (step 0: accuracy 0, margin 0, loss $\ln 2$). Training still uses the fp16 frozen copy. \\
-DPO GradScaler init & -- & $2^{10}$ (SFT $2^{16}$) & Set a priori, not tuned: DPO back-propagates through summed sequence log-probs, so gradients are larger than SFT's token mean and a lower initial scale limits overflow-skipped updates in a 468-step run. Skipped steps: \pending{}. (SFT never overflowed: scale stayed at $2^{16}$.) \\
+DPO GradScaler init & -- & $2^{10}$ (SFT $2^{16}$) & Set a priori, not tuned: DPO back-propagates through summed sequence log-probs, so gradients are larger than SFT's token mean and a lower initial scale limits overflow-skipped updates in a 468-step run. Skipped steps: 0 in both DPO runs (scale stayed at $2^{10}$). (SFT never overflowed: scale stayed at $2^{16}$.) \\
 DPO optimizer & RMSprop or AdamW & AdamW, WD 0 & Within the guide; identical for both DPO runs. \\
 LoRA-DPO & (student choice) & Table~\ref{tab:config} & Justified in \S4. \\
 \bottomrule
@@ -173,7 +173,13 @@ $-298.5 \to -307.1$), the usual DPO pattern. Training and validation curves over
 no overfitting; the slow, still-rising margin suggests the run is learning-rate-limited rather than converged.
 Pre-clip gradient norms were 40--80 (median 57; summed sequence log-probs), so clipping acted on every step, as
 in SFT. The loss scale stayed at $2^{10}$: no step was skipped.
-\emph{HH-RLHF}: \pending{}
+\emph{HH-RLHF} (126 min, resumed once at step 350): validation loss fell from 0.693 to 0.639 and reward accuracy rose to
+0.59 by step 50, then plateaued at 0.63 from step 300; the best evaluation, step 450 (accuracy 0.636, margin 0.23),
+is the submitted checkpoint, and the final step is slightly worse (0.643, 0.621). The preference signal is weaker than
+UltraFeedback's: the margin is a third as large, as HH pairs share the dialogue and often differ by one sentence, and
+many labels are noisy. Again both summed log-probs fell, rejected by more (chosen $-120.7 \to -122.7$, rejected
+$-112.3 \to -116.5$). Responses are shorter, so pre-clip gradient norms were lower (median 35) but still clipped at
+every step; curves overlap and no step was skipped.
 
 \begin{table}[h]\centering\scriptsize
 \input{generated/dpo.tex}
@@ -314,7 +320,7 @@ average but not in single verdicts, and length bias is checked only post hoc (Ta
 is not purely stylistic: several style reasons cite missing content, so style and usefulness verdicts are correlated.
 No human spot check was done.
 (ii) \emph{Small evaluation sets.} With $n=300$ the 95\% interval of a win rate near 50\% is about
-$\pm5.7$ points; the 32-prompt persona set (6 safety prompts) only supports coarse conclusions.
+$\pm5.7$ points; the 32-prompt persona set (6 safety prompts) only supports coarse conclusions, and one of its coding prompts (a committed \texttt{.env} file) paraphrases a training prompt.
 (iii) \emph{Single seed} for data sampling, training and A/B order; no run was repeated, so seed variance is unknown.
 (iv) \emph{Synthetic HH evaluation set}: the provided 300 prompts are templated, so per-category differences can
 reflect a template rather than a behaviour.

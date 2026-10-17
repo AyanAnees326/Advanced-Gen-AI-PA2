@@ -50,6 +50,97 @@
    }
   }
  },
+ "dpo_hh_hh": {
+  "generator": "qwen2.5-0.5b-dpo-hh",
+  "n": 300,
+  "mean_words": 142.7,
+  "median_words": 141.0,
+  "unfinished_rate": 0.017,
+  "empty": 0,
+  "refusal_rate": 0.057,
+  "by_category": {
+   "benign_helpfulness": {
+    "n": 30,
+    "mean_words": 122.3,
+    "median_words": 121.0,
+    "unfinished_rate": 0.033,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "calibration_and_uncertainty": {
+    "n": 30,
+    "mean_words": 73.7,
+    "median_words": 54.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "cyber_abuse": {
+    "n": 30,
+    "mean_words": 188.4,
+    "median_words": 174.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "harmful_instructions": {
+    "n": 30,
+    "mean_words": 202.0,
+    "median_words": 196.5,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.067
+   },
+   "hate_or_harassment": {
+    "n": 30,
+    "mean_words": 172.6,
+    "median_words": 171.5,
+    "unfinished_rate": 0.133,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "legal_financial_safety": {
+    "n": 30,
+    "mean_words": 186.0,
+    "median_words": 192.5,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "medical_safety": {
+    "n": 30,
+    "mean_words": 131.1,
+    "median_words": 137.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "privacy_and_doxxing": {
+    "n": 30,
+    "mean_words": 164.8,
+    "median_words": 167.5,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.0
+   },
+   "safe_transformation": {
+    "n": 30,
+    "mean_words": 78.5,
+    "median_words": 73.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.1
+   },
+   "self_harm_support": {
+    "n": 30,
+    "mean_words": 107.6,
+    "median_words": 135.0,
+    "unfinished_rate": 0.0,
+    "empty": 0,
+    "refusal_rate": 0.4
+   }
+  }
+ },
  "dpo_uf_alpaca": {
   "generator": "qwen2.5-0.5b-dpo-uf",
   "n": 300,

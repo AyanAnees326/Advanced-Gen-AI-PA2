@@ -1,0 +1,9 @@
+\begin{tabular}{lp{0.68\linewidth}}
+\toprule
+Comparison & W/T/L (WR$_{\text{tie}=\frac12}$, \%) per prompt category and by answer length \\
+\midrule
+UF-DPO vs SFT (AlpacaEval-300) & helpful base: 12/14/25 (37.3); koala: 25/11/24 (50.8); oasst: 18/13/23 (45.4); selfinstruct: 34/11/50 (41.6); vicuna: 23/7/10 (66.2); \emph{cand.\ longer} (n=245): 94/38/113 (46.1); \emph{cand.\ not longer} (n=55): 18/18/19 (49.1) \\
+LoRA-DPO vs SmolLM2 (persona: style) & coding: 3/4/1 (62.5); cooking: 7/2/1 (80.0); general help: 3/3/2 (56.2); safety sensitive: 4/0/2 (66.7); \emph{cand.\ longer} (n=10): 6/3/1 (75.0); \emph{cand.\ not longer} (n=22): 11/6/5 (63.6) \\
+LoRA-DPO vs SmolLM2 (persona: usefulness/safety) & coding: 4/0/4 (50.0); cooking: 2/0/8 (20.0); general help: 2/1/5 (31.2); safety sensitive: 4/0/2 (66.7); \emph{cand.\ longer} (n=10): 5/0/5 (50.0); \emph{cand.\ not longer} (n=22): 7/1/14 (34.1) \\
+\bottomrule
+\end{tabular}

@@ -1,6 +1,6 @@
 """LaTeX tables for the report, generated from the saved run/eval files so the PDF matches the repository.
 
-    python scripts/report_tables.py   # -> report/generated/{judge,genstats,dpo}.tex
+    python scripts/report_tables.py   # -> report/generated/{judge,genstats,dpo,categories}.tex
 """
 
 from __future__ import annotations
@@ -63,8 +63,43 @@ def dpo_table():
             "$\\bar r_w$ & $\\bar r_l$ \\\\\n\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
 
 
+def jsonl(path):
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()] if path.exists() else []
+
+
+def wtl(rows):
+    w, t, l = (sum(r["outcome"] == o for r in rows) for o in ("win", "tie", "loss"))
+    return f"{w}/{t}/{l} ({pct((w + t / 2) / len(rows)) if rows else '--'})"
+
+
+def category_table():
+    """Per-category W/T/L (win rate, ties as half) and the split by which answer is longer (judge length bias)."""
+    out = []
+    for key, label in LABEL.items():
+        judged = jsonl(EVAL / f"{key}_judged.jsonl")
+        if not judged:
+            continue
+        pairs = {p["pair_id"]: p for p in jsonl(EVAL / f"{key}_pairs.jsonl")}
+
+        def cand_longer(r):
+            p = pairs[r["pair_id"]]
+            cand, base = (p["response_a"], p["response_b"]) if p["hidden"]["candidate_slot"] == "A" else \
+                         (p["response_b"], p["response_a"])
+            return len(cand.split()) > len(base.split())
+        cats = sorted({r["category"] for r in judged})
+        cells = [f"{c.replace('_', ' ')}: {wtl([r for r in judged if r['category'] == c])}" for c in cats]
+        longer = [r for r in judged if cand_longer(r)]
+        shorter = [r for r in judged if not cand_longer(r)]
+        cells += [f"\\emph{{cand.\\ longer}} (n={len(longer)}): {wtl(longer)}",
+                  f"\\emph{{cand.\\ not longer}} (n={len(shorter)}): {wtl(shorter)}"]
+        out.append(f"{label} & " + "; ".join(cells) + " \\\\")
+    return ("\\begin{tabular}{lp{0.68\\linewidth}}\n\\toprule\nComparison & W/T/L (WR$_{\\text{tie}=\\frac12}$, \\%) "
+            "per prompt category and by answer length \\\\\n\\midrule\n" + "\n".join(out) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
 if __name__ == "__main__":
     GENDIR.mkdir(parents=True, exist_ok=True)
-    for name, fn in (("judge", judge_table), ("genstats", genstats_table), ("dpo", dpo_table)):
+    for name, fn in (("judge", judge_table), ("genstats", genstats_table), ("dpo", dpo_table),
+                     ("categories", category_table)):
         (GENDIR / f"{name}.tex").write_text(fn(), encoding="utf-8")
     print(sorted(p.name for p in GENDIR.iterdir()))

@@ -7,14 +7,16 @@ assignment is `docs/assignment_manual.pdf`.
 ## Results
 
 Judge `google/gemini-3.6-flash` (blinded, randomised A/B order); 0 retries, 0 failures, 0 unparseable verdicts.
-Per-pair verdicts and summaries: `outputs/eval/*_judged.jsonl`, `*_judged_summary.json`. Plots: `outputs/plots/`.
+Every pair was judged a second time with A and B swapped; the last column averages the two orders per prompt
+(95% CI from a bootstrap over distinct prompts). Per-pair verdicts and summaries: `outputs/eval/*_judged.jsonl`,
+`*_judged_summary.json`, `*_swapped_judged*`, `order_debiased_summary.json`. Plots: `outputs/plots/`.
 
-| Comparison (candidate vs baseline) | n | W / T / L | Win rate, ties = 1/2 | Win rate, no ties |
-|---|---|---|---|---|
-| HH-RLHF DPO vs SFT (HH eval-300, safety rubric) | 300 | 167 / 22 / 111 | 59.3% (95% CI 54.0-64.8) | 60.1% |
-| UltraFeedback DPO vs SFT (AlpacaEval-300) | 300 | 112 / 56 / 132 | 46.7% (95% CI 41.7-51.8) | 45.9% |
-| LoRA-DPO persona vs SmolLM2-360M-Instruct, style | 32 | 17 / 9 / 6 | 67.2% | 73.9% |
-| LoRA-DPO persona vs SmolLM2-360M-Instruct, usefulness/safety | 32 | 12 / 1 / 19 | 39.1% | 38.7% |
+| Comparison (candidate vs baseline) | n | W / T / L | Win rate, ties = 1/2 | Win rate, no ties | Both orders |
+|---|---|---|---|---|---|
+| HH-RLHF DPO vs SFT (HH eval-300, safety rubric) | 300 | 167 / 22 / 111 | 59.3% (95% CI 54.0-64.8) | 60.1% | 58.0% (50.7-65.2) |
+| UltraFeedback DPO vs SFT (AlpacaEval-300) | 300 | 112 / 56 / 132 | 46.7% (95% CI 41.7-51.8) | 45.9% | 46.5% (42.2-50.7) |
+| LoRA-DPO persona vs SmolLM2-360M-Instruct, style | 32 | 17 / 9 / 6 | 67.2% | 73.9% | 60.9% (49.2-72.7) |
+| LoRA-DPO persona vs SmolLM2-360M-Instruct, usefulness/safety | 32 | 12 / 1 / 19 | 39.1% | 38.7% | 37.5% (22.7-53.1) |
 
 The LoRA persona rows are reported separately and not combined. Analysis is in Sections 5-6 of the report.
 

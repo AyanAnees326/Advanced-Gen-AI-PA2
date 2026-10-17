@@ -1,0 +1,21 @@
+{
+ "model": "outputs/dpo_uf_lr5e-6/best",
+ "adapter": null,
+ "generator": "qwen2.5-0.5b-dpo-uf-lr5e-6",
+ "eval_set": "eval_sets/alpaca_eval_300_seed42.json",
+ "out": "outputs/generations/dpo_uf_lr5e-6_alpaca.json",
+ "chat_template": false,
+ "max_new_tokens": 512,
+ "batch_size": 16,
+ "repetition_penalty": 1.1,
+ "no_repeat_ngram_size": 0,
+ "limit": null,
+ "decoding": "greedy (do_sample=False, temperature/top_p unused)",
+ "stop_token_ids": [
+  151643,
+  151645
+ ],
+ "prompt_format": "<|im_start|>user\n{instruction}<|im_end|>\n<|im_start|>assistant\n",
+ "minutes": 4.72,
+ "unfinished": 41
+}

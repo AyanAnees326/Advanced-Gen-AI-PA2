@@ -65,17 +65,34 @@ def test_prompt_longer_than_max_length_has_no_labels_and_zero_logp():
 def test_pad_equal_to_eos_keeps_eos_label_and_attention():
     tok = PadIsEosTokenizer()
     batch = adapter.build_sft_batch(tok, ["Q: ", "Q: "], ["a", "abc"], max_length=16)
-    assert batch["input_ids"][0].tolist() == [*tok.encode("Q: a"), 1, 1, 1]
-    assert batch["labels"][0].tolist() == [-100] * 3 + [tok.encode("a")[0], 1, -100, -100]
-    assert batch["attention_mask"][0].tolist() == [1, 1, 1, 1, 1, 0, 0]
+    assert batch["input_ids"][0].tolist() == [*tok.encode("Q: a"), 1] + [1] * 11
+    assert batch["labels"][0].tolist() == [-100] * 3 + [tok.encode("a")[0], 1] + [-100] * 11
+    assert batch["attention_mask"][0].tolist() == [1] * 5 + [0] * 11
 
 
 def test_missing_pad_or_eos_tokens():
     batch = adapter.build_sft_batch(NoPadTokenizer(), ["Q: "], ["a"], max_length=8)
-    assert batch["labels"][0, -1].item() == 1  # EOS still appended
+    assert batch["labels"][0, 4].item() == 1 and batch["input_ids"][0, 5:].eq(1).all()  # EOS appended, pads with EOS id
     batch = adapter.build_sft_batch(NoEosTokenizer(), ["Q: ", "Q: "], ["a", "abc"], max_length=8)
-    assert batch["labels"][0].tolist() == [-100] * 3 + NoEosTokenizer().encode("a") + [-100, -100]
+    assert batch["labels"][0].tolist() == [-100] * 3 + NoEosTokenizer().encode("a") + [-100] * 4
     assert batch["labels"][1].ne(-100).sum().item() == 3
+
+
+def test_adapter_batches_are_padded_and_truncated_to_max_length():
+    tok = ToyTokenizer()
+    for max_length in (4, 9, 20):
+        sft = adapter.build_sft_batch(tok, ["Q: ", "long prompt: "], ["a", "longer answer"], max_length)
+        dpo = adapter.build_dpo_batch(tok, ["Q: ", "P: "], ["a", "bb"], ["ccc", "d"], max_length)
+        for batch in (sft, dpo["chosen"], dpo["rejected"]):
+            assert all(v.shape == (2, max_length) for v in batch.values())
+
+
+def test_float64_model_keeps_float64_logprobs():
+    tok = ToyTokenizer()
+    model = PositionalLM(tok.vocab_size).double()
+    logps = adapter.compute_response_logprobs(model, tok, ["Q: "], ["abc"], 16)
+    assert logps.dtype == torch.float64
+    torch.testing.assert_close(logps, torch.tensor([manual_logp(model, tok, "Q: ", "abc", 16)], dtype=torch.float64))
 
 
 def test_logprobs_match_manual_sum_and_are_order_and_padding_invariant():
@@ -103,7 +120,8 @@ def test_sft_loss_is_token_mean():
 def test_dpo_loss_matches_formula_gradients_and_extremes():
     pc = torch.tensor([-1.0, -3.0, -2.0], requires_grad=True)
     pr = torch.tensor([-2.0, -1.0, -2.5], requires_grad=True)
-    rc, rr = torch.tensor([-1.5, -2.0, -2.0]), torch.tensor([-1.5, -2.0, -3.0])
+    rc = torch.tensor([-1.5, -2.0, -2.0], requires_grad=True)
+    rr = torch.tensor([-1.5, -2.0, -3.0], requires_grad=True)
     beta = 0.1
     loss = adapter.compute_dpo_loss_from_logps(pc, pr, rc, rr, beta)
     z = beta * ((pc - pr) - (rc - rr))
@@ -111,6 +129,10 @@ def test_dpo_loss_matches_formula_gradients_and_extremes():
     loss.backward()
     torch.testing.assert_close(pc.grad, -beta * torch.sigmoid(-z.detach()) / 3)
     torch.testing.assert_close(pr.grad, beta * torch.sigmoid(-z.detach()) / 3)
+    torch.testing.assert_close(rc.grad, beta * torch.sigmoid(-z.detach()) / 3)  # pure function of all four inputs
+    torch.testing.assert_close(rr.grad, -beta * torch.sigmoid(-z.detach()) / 3)
+    double = [torch.randn(3, dtype=torch.float64, requires_grad=True) for _ in range(4)]
+    assert torch.autograd.gradcheck(lambda *x: adapter.compute_dpo_loss_from_logps(*x, 0.3), double)
 
     big = torch.tensor([1e4, -1e4])
     zeros = torch.zeros(2)

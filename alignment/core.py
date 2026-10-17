@@ -27,13 +27,13 @@ def _pad_id(tokenizer) -> int:
     return 0
 
 
-def build_lm_batch(tokenizer, prompts, responses, max_length):
+def build_lm_batch(tokenizer, prompts, responses, max_length, pad_to_max_length=False):
     """Right-padded batch where only response tokens (+ EOS) carry labels.
 
     Prompt and response are tokenized separately, EOS is appended to the response
     (when the tokenizer has one), and the concatenation is truncated to
-    ``max_length`` -- so a long response can lose its EOS. Padding is to the
-    longest row in the batch. Labels are built from positions, never from token
+    ``max_length`` -- so a long response can lose its EOS. Rows are padded to
+    ``max_length`` (grading adapter) or, in training, to the longest row. Labels are built from positions, never from token
     ids, so pad_token_id == eos_token_id (Qwen) is handled correctly.
     """
     prompts, responses = list(prompts), list(responses)
@@ -50,7 +50,7 @@ def build_lm_batch(tokenizer, prompts, responses, max_length):
         labels = ([IGNORE_INDEX] * len(prompt_ids) + response_ids)[:max_length]
         rows.append((ids, labels))
 
-    width = max([len(ids) for ids, _ in rows] + [1])
+    width = max(max_length if pad_to_max_length else max([len(ids) for ids, _ in rows], default=0), 1)
     input_ids = torch.full((len(rows), width), _pad_id(tokenizer), dtype=torch.long)
     attention_mask = torch.zeros((len(rows), width), dtype=torch.long)
     labels = torch.full((len(rows), width), IGNORE_INDEX, dtype=torch.long)
@@ -61,10 +61,10 @@ def build_lm_batch(tokenizer, prompts, responses, max_length):
     return {"input_ids": input_ids, "attention_mask": attention_mask, "labels": labels}
 
 
-def build_preference_batch(tokenizer, prompts, chosen, rejected, max_length):
+def build_preference_batch(tokenizer, prompts, chosen, rejected, max_length, pad_to_max_length=False):
     return {
-        "chosen": build_lm_batch(tokenizer, prompts, chosen, max_length),
-        "rejected": build_lm_batch(tokenizer, prompts, rejected, max_length),
+        "chosen": build_lm_batch(tokenizer, prompts, chosen, max_length, pad_to_max_length),
+        "rejected": build_lm_batch(tokenizer, prompts, rejected, max_length, pad_to_max_length),
     }
 
 
@@ -80,13 +80,14 @@ def sequence_logprobs(model, batch):
 
     Logits at position t score token t+1; positions whose shifted label is
     IGNORE_INDEX (prompt, padding) contribute exactly zero. The log-softmax runs
-    in fp32 even under fp16 autocast.
+    in at least fp32 (fp16 / bf16 logits are upcast, fp64 is kept).
     """
     device = model_device(model)
     input_ids = batch["input_ids"].to(device)
     attention_mask = batch["attention_mask"].to(device)
     labels = batch["labels"].to(device)[:, 1:]
-    logits = model(input_ids=input_ids, attention_mask=attention_mask).logits[:, :-1].float()
+    logits = model(input_ids=input_ids, attention_mask=attention_mask).logits[:, :-1]
+    logits = logits.to(torch.promote_types(logits.dtype, torch.float32))
     token_logps = -F.cross_entropy(
         logits.reshape(-1, logits.size(-1)), labels.reshape(-1), ignore_index=IGNORE_INDEX, reduction="none"
     ).view(labels.shape)
@@ -102,13 +103,15 @@ def sft_loss(model, batch):
 def dpo_loss(policy_chosen, policy_rejected, reference_chosen, reference_rejected, beta):
     """Batch-mean DPO loss plus detached implicit rewards (r_w, r_l) per row.
 
-    Reference log-probs are treated as constants (detached).
+    A pure function of the four log-prob tensors (differentiable in all of them);
+    the reference stays frozen because its log-probs are computed under no_grad
+    (``preference_logprobs`` / the cached validation reference).
     """
     policy_chosen, policy_rejected = torch.as_tensor(policy_chosen), torch.as_tensor(policy_rejected)
     if not policy_chosen.is_floating_point():
         policy_chosen, policy_rejected = policy_chosen.float(), policy_rejected.float()
-    reference_chosen = torch.as_tensor(reference_chosen).detach().to(policy_chosen)
-    reference_rejected = torch.as_tensor(reference_rejected).detach().to(policy_chosen)
+    reference_chosen = torch.as_tensor(reference_chosen).to(policy_chosen)
+    reference_rejected = torch.as_tensor(reference_rejected).to(policy_chosen)
 
     chosen_logratio = policy_chosen - reference_chosen
     rejected_logratio = policy_rejected - reference_rejected

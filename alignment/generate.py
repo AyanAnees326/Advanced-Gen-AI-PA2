@@ -87,7 +87,7 @@ def main(argv=None):
     ap.add_argument("--chat_template", action="store_true", help="use the tokenizer chat template (SmolLM2)")
     ap.add_argument("--max_new_tokens", type=int, default=512)
     ap.add_argument("--batch_size", type=int, default=16)
-    ap.add_argument("--repetition_penalty", type=float, default=1.0)
+    ap.add_argument("--repetition_penalty", type=float, default=1.1)
     ap.add_argument("--no_repeat_ngram_size", type=int, default=0)
     ap.add_argument("--limit", type=int, default=None, help="sanity check on the first N prompts")
     ap.add_argument("--overwrite", action="store_true")

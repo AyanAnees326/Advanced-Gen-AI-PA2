@@ -14,7 +14,7 @@
 \newcommand{\fp}[1]{\nolinkurl{#1}}
 
 \title{Small-Model Alignment with SFT and DPO\\\large PA2 report}
-\author{GitHub: \href{https://github.com/AyanAnees326/small-model-alignment}{AyanAnees326/small-model-alignment}}
+\author{Ayan Anees\\\small GitHub: \href{https://github.com/AyanAnees326/small-model-alignment}{AyanAnees326/small-model-alignment}}
 \date{}
 
 \begin{document}
@@ -23,14 +23,14 @@
 %=====================================================================
 \section{Repository, Models, and Data}
 
-\textbf{Repository.} \url{https://github.com/AyanAnees326/small-model-alignment} (branch \texttt{testing}).
+\textbf{Repository.} \url{https://github.com/AyanAnees326/small-model-alignment} (branch \texttt{main}).
 Training math is in \fp{alignment/core.py} (also behind \fp{submission_adapter.py}), the custom SFT/DPO loop in
 \fp{alignment/train.py}, the TRL/LoRA run in \fp{alignment/train_lora_dpo.py}, generation in
 \fp{alignment/generate.py}, blinded pair construction in \fp{alignment/pairs.py} and the Kaggle judge in
 \fp{scripts/judge_pairwise_kaggle.py}. \fp{scripts/run_local_pipeline.sh} reruns every stage except judging.
 \emph{Kaggle setup} (\fp{notebooks/01_kaggle_setup.ipynb}, run on GPU T4$\times$2): the repository clones and
 installs without reinstalling PyTorch; the notebook sees two Tesla T4 GPUs and reports PyTorch 2.11.0+cu128,
-Transformers 4.57.6 and Datasets 4.8.5, and the public adapter and edge-case tests pass (16/16 at that commit; the final suite, 19 tests, passes locally).
+Transformers 4.57.6 and Datasets 4.8.5, and the public adapter and edge-case tests pass (16/16 at that commit; the final suite, 21 tests, passes locally).
 
 \textbf{Models.} SFT and both DPO runs start from \texttt{Qwen/Qwen2.5-0.5B} (base, 494M parameters); the
 persona run uses \texttt{HuggingFaceTB/SmolLM2-360M-Instruct}.

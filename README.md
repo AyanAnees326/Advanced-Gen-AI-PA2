@@ -17,8 +17,11 @@ Every pair was judged a second time with A and B swapped; the last column averag
 | UltraFeedback DPO vs SFT (AlpacaEval-300) | 300 | 112 / 56 / 132 | 46.7% (95% CI 41.7-51.8) | 45.9% | 46.5% (42.2-50.7) |
 | LoRA-DPO persona vs SmolLM2-360M-Instruct, style | 32 | 17 / 9 / 6 | 67.2% | 73.9% | 60.9% (49.2-72.7) |
 | LoRA-DPO persona vs SmolLM2-360M-Instruct, usefulness/safety | 32 | 12 / 1 / 19 | 39.1% | 38.7% | 37.5% (22.7-53.1) |
+| UltraFeedback DPO, LR 5e-6 pilot (150 steps) vs SFT (AlpacaEval-300) | 300 | 119 / 34 / 147 | 45.3% | 44.7% | 45.3% (40.9-49.9) |
 
-The LoRA persona rows are reported separately and not combined. Analysis is in Sections 5-6 of the report.
+The LoRA persona rows are reported separately and not combined. The last row is an ablation, not a submitted model:
+UltraFeedback DPO at 5x the guide learning rate for 150 steps (`outputs/dpo_uf_lr5e-6/`) gives longer answers and no
+better win rate, so the guide run is not mainly learning-rate-limited. Analysis is in Sections 5-6 of the report.
 
 ## Layout
 

@@ -70,5 +70,23 @@
    18
   ],
   "sign_test_p": 0.1849333420395851
+ },
+ "uf_dpo_lr5e-6_vs_sft_alpaca": {
+  "n_prompts": 300,
+  "wr_original": 0.4533333333333333,
+  "wr_swapped": 0.4533333333333333,
+  "wr_debiased": 0.4533333333333333,
+  "ci95": [
+   0.4091666666666667,
+   0.49916666666666665
+  ],
+  "same_outcome": 206,
+  "reversed": 62,
+  "slot_a_share": 0.6221804511278195,
+  "prompts_better_worse": [
+   95,
+   125
+  ],
+  "sign_test_p": 0.050314559268627095
  }
 }

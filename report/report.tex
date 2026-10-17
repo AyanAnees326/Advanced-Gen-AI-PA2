@@ -170,7 +170,13 @@ jumped to 0.69 by step 50, then crept to 0.738; the last evaluation was the high
 the final step 468. The margin (0.75) comes mostly from pushing rejected responses down: implicit rewards are
 $-0.11$ (chosen) and $-0.86$ (rejected), i.e.\ both summed log-probs fell (chosen $-342.5 \to -343.6$, rejected
 $-298.5 \to -307.1$), the usual DPO pattern. Training and validation curves overlap, so one epoch at $10^{-6}$ shows
-no overfitting; the slow, still-rising margin suggests the run is learning-rate-limited rather than converged.
+no overfitting. Because the margin was still rising, a \emph{learning-rate pilot} (\fp{dpo_uf_lr5e-6}: $5{\times}10^{-6}$,
+150 steps, same seed and batch order; last rows of Table~\ref{tab:dpo}) tested whether the run was learning-rate-limited.
+It exceeded the full run's final margin (0.77 vs.\ 0.75) in a third of the steps, but its validation loss stalled at 0.598--0.595
+from step 50 while the guide run kept falling (0.568 at step 150), and its accuracy stayed lower (0.690 vs.\ 0.704 at
+step 150). The margin came from pushing both responses down (chosen $-6.8$ nats, rejected $-14.5$; full run $-1.1$ and
+$-8.6$): a larger rate moves the implicit rewards faster but does not rank pairs better, so the run is not mainly
+learning-rate-limited.
 Pre-clip gradient norms were 40--80 (median 57; summed sequence log-probs), so clipping acted on every step, as
 in SFT. The loss scale stayed at $2^{10}$: no step was skipped.
 \emph{HH-RLHF} (126 min, resumed once at step 350): validation loss fell from 0.693 to 0.639 and reward accuracy rose to
@@ -184,7 +190,8 @@ every step; curves overlap and no step was skipped.
 \begin{table}[h]\centering\scriptsize
 \input{generated/dpo.tex}
 \caption{DPO validation metrics (1,000 held-out pairs) at step 0, at the submitted best checkpoint and at the final
-step. $\bar r = \beta(\log\pi_\theta - \log\pi_{\text{ref}})$ summed over response tokens.}
+step. $\bar r = \beta(\log\pi_\theta - \log\pi_{\text{ref}})$ summed over response tokens. Last rows: the 150-step
+learning-rate pilot (not a submitted model).}
 \label{tab:dpo}
 \end{table}
 
@@ -238,8 +245,8 @@ general plus safe-redirection guidance, with tone explicitly ignored). The HH se
 safety clause (reward refusal of genuinely harmful requests, privacy protection, calibrated uncertainty and safe
 redirection; penalise harmful compliance and needless refusal of benign requests) and the set's per-prompt guidance
 on expected behaviour. To measure position bias, every pair was then judged a second time with A and B exchanged
-(\fp{<comparison>_swapped_pairs.jsonl}, Table~\ref{tab:order}). All 1,328 judged pairs (664 per pass) parsed on the
-first attempt: 0 retries, 0 failures, 0 unknown.
+(\fp{<comparison>_swapped_pairs.jsonl}, Table~\ref{tab:order}). All 1,928 judged pairs (964 per pass, including the
+learning-rate pilot) parsed on the first attempt: 0 retries, 0 failures, 0 unknown.
 
 \textbf{UltraFeedback DPO vs.\ SFT} (AlpacaEval, $n=300$): 112 wins, 56 ties, 132 losses; win rate 46.7\% with ties
 as half (bootstrap 95\% CI 41.7--51.8) and 45.9\% without ties. A two-sided sign test on the 244 decisive pairs gives
@@ -248,6 +255,10 @@ in 161 of 244 decisive verdicts (66\%). DPO was in slot A for 159 pairs (win rat
 (32.6\%). The swapped pass agrees (46.3\%); averaged over both orders the win rate is 46.5\% (CI 42.2--50.7; DPO
 better on balance on 87 prompts, worse on 112, $p=0.09$). Only 66\% of prompts keep their outcome when the order is
 reversed and 66 flip between win and loss, so single verdicts are unreliable while the aggregate is stable.
+\emph{Learning-rate pilot} ($5{\times}10^{-6}$, 150 steps) vs.\ SFT on the same prompts: 119/34/147, win rate 45.3\% in
+each pass (identical totals, but 94 prompts change outcome between orders); over both orders 45.3\% (CI 40.9--49.9;
+better on 95 prompts, worse on 125, $p=0.05$). Five times the learning rate does not help: the win rate is 1.2 points
+lower than the guide run's, with fewer ties (11\% vs.\ 19\%) and more losses.
 
 \textbf{HH-RLHF DPO vs.\ SFT} (HH eval set, $n=300$, safety rubric): 167 wins, 22 ties, 111 losses; win rate 59.3\%
 with ties as half (CI 54.0--64.8) and 60.1\% without ties; sign test on the 278 decisive pairs $p=0.001$, so DPO is
@@ -283,7 +294,8 @@ share of outputs containing a refusal phrase (string match).}
 
 \textbf{Length.} UltraFeedback DPO answers are 40\% longer than SFT's (mean 203 vs.\ 145 words; longer on 245 of
 300 prompts) and hit the token limit more often (8\% vs.\ 5\%), consistent with UltraFeedback's chosen responses
-being longer than its rejected ones. Because LLM judges favour length, this is read next to the win rate in
+being longer than its rejected ones; the learning-rate pilot is longer still (228 words, 13.7\% at the limit, longer
+than SFT on 270 prompts). Because LLM judges favour length, this is read next to the win rate in
 Section~\ref{sec:interp}. The LoRA persona answers are shorter than the base model's (93 vs.\ 123 words).
 
 %=====================================================================
@@ -311,9 +323,11 @@ open-ended prompts, where elaboration is the point, it helps. The reward diagnos
 ``negative'' shift: one epoch at $10^{-6}$ with $\beta=0.1$ reached 0.74 validation reward accuracy, mainly by lowering
 rejected log-probs ($-8.6$ nats) while chosen ones barely moved ($-1.1$), so the policy learned to rank UltraFeedback
 pairs, and what transfers to AlpacaEval is the form of the chosen answers, not their accuracy. The SFT baseline already
-answers in a clean format and stops at EOS, so there is little formatting headroom to gain. A longer run or a larger
-learning rate would increase the shift, but given the category pattern it would likely amplify both the gains and
-the losses.
+answers in a clean format and stops at EOS, so there is little formatting headroom to gain. The learning-rate pilot
+shows what more optimisation pressure does: answers grow longer and the losses on short factual and constrained
+prompts deepen (helpful\_base 37.3 $\to$ 34.3\%, selfinstruct 41.6 $\to$ 38.4\%), open-ended categories stay above 50\%
+(vicuna 60.0\%, oasst 57.4\%), and the 270 longer answers win only 43.3\%. A larger rate amplifies the form shift,
+not answer quality.
 
 \textbf{HH-RLHF eval: DPO is better than SFT (+9.3 points, $p=0.001$; +8.0 over both orders), mainly because it declines or redirects
 more often, but it is not reliably safe.} \emph{Observation.} The gain is broad: DPO wins 8 of 10 categories, most
@@ -381,7 +395,8 @@ is not purely stylistic: several style reasons cite missing content, so style an
 No human spot check was done.
 (ii) \emph{Small evaluation sets.} With $n=300$ the 95\% interval of a win rate near 50\% is about
 $\pm5.7$ points; the 32-prompt persona set (6 safety prompts) only supports coarse conclusions, and one of its coding prompts (a committed \texttt{.env} file) paraphrases a training prompt.
-(iii) \emph{Single seed} for data sampling, training and A/B order; no run was repeated, so seed variance is unknown.
+(iii) \emph{Single seed} for data sampling, training and A/B order; no run was repeated, so seed variance is unknown,
+and the learning-rate ablation is one short pilot, not a sweep.
 (iv) \emph{Synthetic HH evaluation set}: the provided 300 prompts are templated and only 185 are distinct, so
 per-category differences can reflect one template rather than a behaviour (self-harm has 5 distinct prompts). Batched
 fp16 greedy decoding is not bit-exact: of the 71 repeated prompts, 16 (SFT) and 19 (DPO) got different answers across
@@ -395,7 +410,7 @@ generations $\to$ LoRA-DPO $\to$ both DPO runs $\to$ pairs $\to$ plots) and \fp{
 (judging). \fp{scripts/report_tables.py} rebuilds every results table of this report from the files below.
 \begin{itemize}
 \item Data: \fp{outputs/data_manifest.json} (sources, revisions, filters, counts); evaluation prompts in \fp{eval_sets/}.
-\item Configs and metrics per run (\fp{sft}, \fp{dpo_hh}, \fp{dpo_uf}, \fp{lora_dpo}):
+\item Configs and metrics per run (\fp{sft}, \fp{dpo_hh}, \fp{dpo_uf}, \fp{lora_dpo}, pilot \fp{dpo_uf_lr5e-6}):
   \fp{outputs/<run>/config.json}, \fp{metrics.jsonl}, \fp{summary.json} (best step); plots in \fp{outputs/plots/}.
 \item Generations: \fp{outputs/generations/<model>_<set>.json} (+ \fp{.meta.json} with decoding settings);
   sanity checks in \fp{outputs/generations/sanity/}; length statistics in \fp{outputs/eval/generation_stats.json}.

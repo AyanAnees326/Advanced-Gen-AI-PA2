@@ -99,13 +99,14 @@ def plot_lora():
         return
     panels = (("loss", "eval_loss", "DPO loss"), ("rewards/accuracies", "eval_rewards/accuracies", "reward accuracy"),
               ("rewards/margins", "eval_rewards/margins", "reward margin"))
-    fig, axes = plt.subplots(1, 3, figsize=(12, 3.3))
+    fig, axes = plt.subplots(1, 3, figsize=(7.2, 3.6))  # printed at half width: small figure = readable labels
     for ax, (train_key, val_key, name) in zip(axes, panels):
         series(ax, rows, train_key, "train (per step)", "tab:blue", True)
         series(ax, rows, val_key, "eval (20 held-out pairs)", "tab:red", False)
-        ax.set(xlabel="optimizer step (effective batch 8)", ylabel=name, title=f"LoRA-DPO (SmolLM2-360M): {name}")
+        ax.set(xlabel="step (batch 8)", title=name)
         ax.grid(alpha=0.3)
     axes[0].legend(fontsize=7)
+    fig.suptitle("LoRA-DPO: SmolLM2-360M-Instruct, persona pairs")
     fig.tight_layout()
     fig.savefig(OUT / "plots" / "lora_dpo.png", dpi=160)
 

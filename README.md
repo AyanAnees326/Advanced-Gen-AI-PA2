@@ -7,6 +7,16 @@ assignment is `docs/assignment_manual.pdf`.
 Repository: https://github.com/AyanAnees326/Advanced-Gen-AI-PA2 (the executed Kaggle notebooks cloned the same
 history from its earlier copy, `AyanAnees326/small-model-alignment`).
 
+## Submission checklist (manual Section 16)
+
+| Item | Where |
+|---|---|
+| 1. GitHub repository URL | https://github.com/AyanAnees326/Advanced-Gen-AI-PA2 (branch `main`) |
+| 2. Short final report (PDF) | `report/report.pdf` (8 pages incl. figures, tables, references; source `report/report.tex`) |
+| 3. Training plots for SFT and DPO | `outputs/plots/sft.png`, `outputs/plots/dpo.png` (both DPO runs), `outputs/plots/lora_dpo.png` |
+| 4. Evaluation summary, DPO vs SFT | table below; report Sections 5-6; `outputs/eval/*_judged_summary.json`, `outputs/eval/order_debiased_summary.json` |
+| 5. Root-level `submission_adapter.py`, public tests passing | `submission_adapter.py`; `PYTHONPATH=. python -m pytest -q tests/test_public_adapter_smoke.py` (7 passed) |
+
 ## Results
 
 Judge `google/gemini-3.6-flash` (blinded, randomised A/B order); 0 retries, 0 failures, 0 unparseable verdicts.

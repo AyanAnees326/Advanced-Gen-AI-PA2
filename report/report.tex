@@ -3,7 +3,7 @@
 \usepackage{booktabs,graphicx,makecell,xcolor,amsmath,hyperref,tabularx,caption,enumitem}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage{xurl,array}
+\usepackage{xurl,array,float}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \hypersetup{colorlinks,urlcolor=blue!60!black,linkcolor=black,citecolor=black}
@@ -68,7 +68,7 @@ initialisation of LoRA weights and A/B order.
 %=====================================================================
 \section{Experimental Configuration}
 
-\begin{table}[h]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{table}[H]\centering\scriptsize\setlength{\tabcolsep}{3pt}
 \begin{tabularx}{\linewidth}{@{}L{0.95cm}L{2.3cm}YL{1.1cm}L{1.9cm}L{1.15cm}L{1.1cm}L{0.6cm}L{2.0cm}L{1.6cm}@{}}
 \toprule
 Run & Trainable parameters & Optimizer; peak LR; schedule; warmup; weight decay; clip & Batch dev$\times$acc = eff. & Precision & Max len (prompt) & Epochs / steps & Seed & DPO $\beta$; reference & Eval decoding \\
@@ -93,7 +93,7 @@ the prompt of \S1 (no system prompt); SmolLM2 runs use the model's own chat temp
 %=====================================================================
 \section{Parameter Choices and Deviations}
 
-\begin{table}[h]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{table}[H]\centering\scriptsize\setlength{\tabcolsep}{3pt}
 \begin{tabularx}{\linewidth}{@{}L{2.3cm}L{2.0cm}L{2.6cm}Y@{}}
 \toprule
 Setting & Guide & Used & Why, and effect \\
@@ -116,7 +116,7 @@ LoRA-DPO & (student choice) & Table~\ref{tab:config} & Justified in \S4. \\
 \label{tab:dev}
 \end{table}
 
-\begin{table}[h]\centering\scriptsize
+\begin{table}[H]\centering\scriptsize
 \begin{tabular}{llrrrr}
 \toprule
 SFT model, first 20 prompts & Repetition penalty & Hit 512 tokens & Mean words & Mean distinct-4 & Min distinct-4 \\
@@ -136,7 +136,7 @@ response. Most of the length drop is the removed loops: on prompts that did not 
 %=====================================================================
 \section{Training Behavior}
 
-\begin{figure}[h]\centering
+\begin{figure}[H]\centering
 \includegraphics[width=0.495\linewidth]{../outputs/plots/sft.png}\hfill
 \includegraphics[width=0.495\linewidth]{../outputs/plots/lora_dpo.png}
 \caption{Left: SFT training loss (faint: per step; solid: EMA 0.9) and unsmoothed validation loss; dashed line =

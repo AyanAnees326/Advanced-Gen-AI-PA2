@@ -4,6 +4,9 @@ SFT, two from-scratch DPO runs and a TRL/LoRA persona DPO run on small open mode
 pairwise evaluation by a Kaggle model-proxy judge. The report is `report/report.pdf`; the
 assignment is `docs/assignment_manual.pdf`.
 
+Repository: https://github.com/AyanAnees326/Advanced-Gen-AI-PA2 (the executed Kaggle notebooks cloned the same
+history from its earlier copy, `AyanAnees326/small-model-alignment`).
+
 ## Results
 
 Judge `google/gemini-3.6-flash` (blinded, randomised A/B order); 0 retries, 0 failures, 0 unparseable verdicts.
@@ -43,6 +46,8 @@ eval_sets/                   hh_rlhf_eval_300_seed42.json, alpaca_eval_300_seed4
 
 Each run directory `outputs/<run>/` holds `config.json` (the values actually used), `metrics.jsonl`,
 `summary.json` and, locally only, the `best/` and `final/` checkpoints (not committed: size).
+`outputs/logs/pipeline_run{1,2,3}.log` are the console logs of the three pipeline invocations: run 1 was cut by a
+power failure during generation, run 2 during HH-RLHF DPO at step 355, and run 3 resumed from the step-350 state.
 
 ## Reproduce
 

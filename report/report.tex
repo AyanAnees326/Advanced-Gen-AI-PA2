@@ -19,7 +19,7 @@
 \newcommand{\fp}[1]{\nolinkurl{#1}}
 
 \title{Small-Model Alignment with SFT and DPO\\\large PA2 report}
-\author{Ayan Anees\\\small GitHub: \href{https://github.com/AyanAnees326/small-model-alignment}{AyanAnees326/small-model-alignment}}
+\author{Ayan Anees\\\small GitHub: \href{https://github.com/AyanAnees326/Advanced-Gen-AI-PA2}{AyanAnees326/Advanced-Gen-AI-PA2}}
 \date{}
 
 \begin{document}
@@ -28,7 +28,7 @@
 %=====================================================================
 \section{Repository, Models, and Data}
 
-\textbf{Repository.} \url{https://github.com/AyanAnees326/small-model-alignment} (branch \texttt{main}).
+\textbf{Repository.} \url{https://github.com/AyanAnees326/Advanced-Gen-AI-PA2} (branch \texttt{main}).
 Training math is in \fp{alignment/core.py} (also behind \fp{submission_adapter.py}), the custom SFT/DPO~\cite{dpo} loop in
 \fp{alignment/train.py}, the TRL/LoRA~\cite{hf} run in \fp{alignment/train_lora_dpo.py}, generation in
 \fp{alignment/generate.py}, blinded pair construction in \fp{alignment/pairs.py} and the Kaggle judge in
@@ -394,7 +394,7 @@ and the learning-rate ablation is one short pilot, not a sweep.
 (iv) \emph{Synthetic HH evaluation set}: the provided 300 prompts are templated and only 185 are distinct, so
 per-category differences can reflect one template rather than a behaviour (self-harm has 5 distinct prompts). Batched fp16 greedy decoding is not bit-exact, so repeated prompts can get different answers.
 (v) \emph{Hardware.} Runs used one 12\,GB AMD GPU (ROCm) rather than the T4$\times$2 reference setup; fp16 kernels
-differ, so numbers will not match a Kaggle rerun bit-for-bit. Only the setup check and the judging ran on Kaggle.
+differ, so numbers will not match a Kaggle rerun bit-for-bit.
 
 \textbf{Reproducing the tables.} \fp{scripts/run_local_pipeline.sh} (data $\to$ SFT $\to$ sanity check $\to$
 generations $\to$ LoRA-DPO $\to$ both DPO runs $\to$ pairs $\to$ plots) and \fp{notebooks/02_kaggle_judge.ipynb}
@@ -407,6 +407,8 @@ Per run (\fp{sft}, \fp{dpo_hh}, \fp{dpo_uf}, \fp{lora_dpo}, pilot \fp{dpo_uf_lr5
 mapping in the \fp{hidden} field, never sent to the judge); judgments \fp{_judged.jsonl}, \fp{_judged_summary.json},
 \fp{_failures.jsonl}; the swapped pass in \fp{_swapped_*}, both combined in \fp{order_debiased_summary.json}.
 Checkpoints are not in git (size); the pipeline recreates them with the same seed.
+Pipeline logs (two runs cut by power failures): \fp{outputs/logs/}; Kaggle cloned the earlier copy
+\texttt{AyanAnees326/small-model-alignment}.
 
 {\footnotesize
 \begin{thebibliography}{9}\setlength{\itemsep}{0pt}
